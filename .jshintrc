@@ -1,0 +1,47 @@
+{
+    // System-level
+    "node": true,
+    "browser": true,
+
+    // Formatting
+    "curly": true,
+    "indent": 4,
+    "smarttabs": true,
+
+    // Strictiness
+    "camelcase": true,
+    "eqeqeq": true,
+    "quotmark": true,
+    "strict": true,
+    "trailing": true,
+    "undef": true,
+    "unused": true,
+
+    /*
+     *  Complexity - see:
+     *  - http://davetayls.me/blog/2013/07/01/how-will-i-keep-javascript-code-quality-hight-jshint/
+     *  - http://www.elijahmanor.com/control-the-complexity-of-your-javascript-functions-with-jshint/
+     */
+    "maxparams": 4,         // 3 or 4
+    "maxstatements": 10,    // 8 to 15
+    "maxcomplexity": 6,
+
+    "globals": {
+        "grunt": false
+    },
+
+    "predef": [
+        "define",
+        "require",
+        "exports",
+        "module",
+        "should",
+        "describe", "xdescribe",
+        "before", "xbefore",
+        "beforeEach", "xbeforeEach",
+        "after", "xafter",
+        "afterEach", "xafterEach",
+        "it", "xit",
+        "inject"
+    ]
+}

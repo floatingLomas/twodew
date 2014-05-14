@@ -1,8 +1,12 @@
 {
-  "name": "twodew",
-  "version": "0.0.0",
-  "description": "",
-  "private": true,
-  "repository": "git://bitbucket.org/floatingLomas/twodew.git",
-  "author": "Jonathan Lomas <jonathan@floatinglomas.ca>"
+    "name": "twodew",
+    "version": "0.0.1",
+    "description": "A simple todo",
+    "private": true,
+    "repository": "https://bitbucket.org/floatingLomas/twodew.git",
+    "author": "Jonathan Lomas <jonathan@floatinglomas.ca>",
+    "main": "server.js",
+    "engines": {
+        "node": "0.10.x"
+    }
 }
