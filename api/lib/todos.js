@@ -1,6 +1,11 @@
 'use strict';
 
 /**
+ *  MongoDB
+ */
+var Mongo = require('mongodb');
+
+/**
  * Expose Todos service
  */
 
@@ -23,8 +28,15 @@ function Todos(collection) {
  *  @api public
  */
 Todos.prototype.get = function (id, next) {
+    var _id;
+    try {
+        _id = new Mongo.ObjectID(id);
+    } catch (err) {
+        return next(err);
+    };
+
     this._collection.findOne({
-        _id: id
+        _id: _id
     }, next);
 };
 
@@ -91,32 +103,83 @@ Todos.prototype.save = function (todo, next) {
     });
 }
 
-function parseCriteria(crit) {
+Todos.prototype.remove = function (id, next) {
+    var _id;
+    try {
+        _id = new Mongo.ObjectID(id);
+    } catch (err) {
+        return next(err, 0);
+    };
+
+    var _collection = this._collection;
+
+    _collection.findOne({
+        _id: _id
+    }, function (err, todo) {
+        if (err && !todo) return next(err, null, 0);
+
+        _collection.remove({
+            _id: todo._id
+        }, {
+            w: 1
+        }, function (err, count) {
+            return next(err, todo, count);
+        });
+    });
+};
+
+/**
+ * Parse a search criteria object and produce a valid MongoDB Search object.
+ *
+ * Valid criteria are:
+ *
+ *      done    {Boolean}   done or not
+ *      text    {String}    string to search for in both title and body (via regex)
+ *      title   {String}    string to search for in the title (via regex)
+ *      body    {String}    string to search for in the body (via regex)
+ *      case    {Boolean}   case-sensitive regexes (default) or not
+ *
+ * @param {Object} criteria
+ * @return  {Object} search
+ * @api private
+ */
+function parseCriteria(criteria) {
+    if (!criteria) return {};
+
     var search = {};
 
-    if (!crit) return search;
+    if (~['false', 'true'].indexOf(criteria.done)) search.done = criteria.done === 'true';
 
-    if (~['false', 'true'].indexOf(crit.done)) search.done = crit.done === 'true';
+    var caseSensitive = !criteria['case-sensitive'];
 
-    var caseSensitive = !crit['case-sensitive'];
+    if (criteria.title) search.title = regexCriterion(criteria.title, caseSensitive);
+    if (criteria.body) search.body = regexCriterion(criteria.body, caseSensitive);
 
-    if (crit.title) search.title = assembleCriterion(crit.title, caseSensitive);
-    if (crit.body) search.body = assembleCriterion(crit.body, caseSensitive);
-
-    if (crit.text) {
+    if (criteria.text) {
         search.$or = [{
-            title: assembleCriterion(crit.text, caseSensitive)
+            title: regexCriterion(criteria.text, caseSensitive)
         }, {
-            body: assembleCriterion(crit.text, caseSensitive)
+            body: regexCriterion(criteria.text, caseSensitive)
         }];
     }
 
-    function assembleCriterion(value, caseSensitive) {
-        return {
-            $regex: value,
-            $options: (caseSensitive) ? 'i' : ''
-        };
-    }
-
     return search;
+}
+
+/**
+ * Assemble a MongoDB Regex criterion, with or without the case-'i'nsenstive
+ * flag.
+ *
+ * @param {String} value
+ * @param {Boolean} insensitive
+ * @api private
+ */
+function regexCriterion(value, insenstive) {
+    var criterion = {
+        $regex: value,
+    };
+
+    if (insenstive) criterion.$options = 'i';
+
+    return criterion;
 }
