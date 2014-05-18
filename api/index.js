@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- *
+ *  Todos API
  */
 module.exports = (function () {
     var express = require('express');
@@ -9,33 +9,47 @@ module.exports = (function () {
 
     var router = express.Router();
 
-    router.use(bodyParser.json());
-
     var db = require('./lib/db');
     var Todos = require('./lib/todos');
 
     var todos;
-
     db.connect(function (err, collection) {
         if (err) throw err;
         todos = new Todos(collection);
     });
 
-    // Get a list of Todos
+    router.use(bodyParser.json());
+
+    /**
+     *  Get a list of Todos (optionally filtered by criteria)
+     *
+     *  Criteria is an object which can contain none, some or all of these keys:
+     *
+     *      done    {Boolean}   done or not
+     *      text    {String}    string to search for in both title and body (via regex)
+     *      title   {String}    string to search for in the title (via regex)
+     *      body    {String}    string to search for in the body (via regex)
+     *      case    {Boolean}   case-sensitive regexes (default) or not
+     *
+     */
     router.get('/todos', function (req, res, next) {
-        todos.find(req.query).toArray(function (err, result) {
+        todos.find(req.query || {}, function (err, result) {
             if (err) return next(err);
 
             return res.json(result);
         });
     });
 
-    // Get a specific Todo by (Object)ID
+    /**
+     *  Get a Todo by _id
+     */
     router.get('/todos/:id', function (req, res, next) {
         handleSimpleActionById(todos.get, req.params.id, res, next);
     });
 
-    // Create a new Todo
+    /**
+     *  Create a new Todo
+     */
     router.post('/todos', validateReqBody, function (req, res, next) {
         todos.create(req.body, function (err, todo) {
             if (err) return next(err);
@@ -49,6 +63,9 @@ module.exports = (function () {
         });
     });
 
+    /**
+     *  Replace a Todo
+     */
     router.put('/todos/:id', validateReqBody, function (req, res, next) {
         todos.update(req.params.id, req.body, function (err, todo) {
             if (err) return next(err);
@@ -62,7 +79,7 @@ module.exports = (function () {
         });
     });
 
-    // Update a todo
+    // Update part of a Todo
     router.patch('/todos/:id', function (req, res, next) {
         var posted = req.body || {};
 

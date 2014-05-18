@@ -6,11 +6,13 @@
 var Mongo = require('mongodb');
 
 /**
- * Expose Todos service
+ *  Expose Todos service
  */
-
 module.exports = Todos;
 
+/**
+ *  Todos Service
+ */
 function Todos(collection) {
     if (!collection) throw new Error('MongoDB Collection is required.');
 
@@ -37,10 +39,11 @@ Todos.prototype.get = function (id, next) {
 };
 
 /**
- * Get Todos given the criteria.  If you provide a callback, it will run; if you do not,
- * it will return Mongo's chainable Cursor.
+ *  Get Todos given the criteria.
  *
- * Criteria is an object which can contain none, some or all of these keys:
+ *  Callback will get any errors (or null) and the results.
+ *
+ *  Criteria is an object which can contain none, some or all of these keys:
  *
  *      done    {Boolean}   done or not
  *      text    {String}    string to search for in both title and body (via regex)
@@ -48,28 +51,35 @@ Todos.prototype.get = function (id, next) {
  *      body    {String}    string to search for in the body (via regex)
  *      case    {Boolean}   case-sensitive regexes (default) or not
  *
- * @param {Object} criteria
- * @param {Function} next
- * @return {Object} Cursor
- * @api public
+ *  @param {Object} criteria
+ *  @param {Function} OPTIONAL fields to return
+ *  @param {Function} next
+ *  @return {Object} Cursor
+ *  @api public
  */
-Todos.prototype.find = function (criteria, next) {
-    var cursor = this._collection.find(parseCriteria(criteria));
+Todos.prototype.find = function (criteria, fields, next) {
+    if (!next && typeof fields === 'function') {
+        next = fields;
+        fields = {};
+    }
 
-    if (next) cursor = cursor.toArray(next);
+    var _fields = {};
+    if ('title' in fields) _fields.title = true;
+    if ('body' in fields) _fields.body = true;
+    if ('done' in fields) _fields.done = true;
 
-    return cursor;
+    this._collection.find(parseCriteria(criteria), _fields).toArray(next);
 };
 
 /**
- * Save a Todo.
+ *  Save a Todo.
  *
- * Callback will get any errors (or null), and the inserted Todo
- * (or null if it is a duplicate title).
+ *  Callback will get any errors (or null), and the inserted Todo
+ *  (or null if it is a duplicate title).
  *
- * @param {Todo} todo
- * @param {Function} next (error, todo)
- * @api public
+ *  @param {Todo} todo
+ *  @param {Function} next (error, todo)
+ *  @api public
  */
 Todos.prototype.create = function (todo, next) {
     if (!todo) return next(new Error("Todo was undefined"));
@@ -100,13 +110,13 @@ Todos.prototype.create = function (todo, next) {
 }
 
 /**
- * Remove a Todo.
+ *  Remove a Todo.
  *
- * Callback will get any errors (or null), and the removed Todo.
+ *  Callback will get any errors (or null), and the removed Todo.
  *
- * @param {Todo} todo
- * @param {Function} next (error, todo)
- * @api public
+ *  @param {Todo} todo
+ *  @param {Function} next (error, todo)
+ *  @api public
  */
 Todos.prototype.remove = function (id, next) {
     var _id = parseObjectId(id);
@@ -128,14 +138,14 @@ Todos.prototype.remove = function (id, next) {
 };
 
 /**
- * Update a Todo, given an ID.  Can handle one, some, or many of the fields.
+ *  Update a Todo, given an ID.  Can handle one, some, or many of the fields.
  *
- * Callback will get any errors (or null), and the updated Todo
- * (or null if it didn't update).
+ *  Callback will get any errors (or null), and the updated Todo
+ *  (or null if it didn't update).
  *
- * @param {Todo} todo
- * @param {Function} next (error, todo)
- * @api public
+ *  @param {Todo} todo
+ *  @param {Function} next (error, todo)
+ *  @api public
  */
 Todos.prototype.update = function (id, values, next) {
     var _id = parseObjectId(id);
@@ -146,7 +156,8 @@ Todos.prototype.update = function (id, values, next) {
     var fields = {};
     if (values.title) fields.title = values.title.toString();
     if (values.body) fields.body = values.body.toString();
-    if ('done' in values) fields.done = (typeof values.done === 'string') ? values.done === 'true' : !! values.done;
+    if ('done' in values)
+        fields.done = (typeof values.done === 'string') ? values.done.toLowerCase() === 'true' : !! values.done;
 
     var _collection = this._collection;
 
@@ -187,19 +198,11 @@ Todos.prototype.done = function (id, value, next) {
 }
 
 /**
- * Parse a MongoDB Object  criteria object and produce a valid MongoDB Search object.
+ *  Parse a string and produce a valid MongoDB ObjectID, or 'Bad ID' error.
  *
- * Valid criteria are:
- *
- *      done    {Boolean}   done or not
- *      text    {String}    string to search for in both title and body (via regex)
- *      title   {String}    string to search for in the title (via regex)
- *      body    {String}    string to search for in the body (via regex)
- *      case    {Boolean}   case-sensitive regexes (default) or not
- *
- * @param {Object} criteria
- * @return  {Object} search
- * @api private
+ *  @param {String} id
+ *  @return {Object} ObjectID
+ *  @api private
  */
 function parseObjectId(id) {
     try {
@@ -210,9 +213,9 @@ function parseObjectId(id) {
 }
 
 /**
- * Parse a search criteria object and produce a valid MongoDB Search object.
+ *  Parse a search criteria object and produce a valid MongoDB Search object.
  *
- * Valid criteria are:
+ *  Valid criteria are:
  *
  *      done    {Boolean}   done or not
  *      text    {String}    string to search for in both title and body (via regex)
@@ -220,16 +223,14 @@ function parseObjectId(id) {
  *      body    {String}    string to search for in the body (via regex)
  *      case    {Boolean}   case-sensitive regexes (default) or not
  *
- * @param {Object} criteria
- * @return  {Object} search
- * @api private
+ *  @param {Object} criteria
+ *  @return  {Object} search
+ *  @api private
  */
 function parseCriteria(criteria) {
     if (!criteria) return {};
 
     var search = {};
-
-    if (~['false', 'true'].indexOf(criteria.done)) search.done = (criteria.done === 'true');
 
     var caseSensitive = !criteria['case-sensitive'];
 
@@ -244,23 +245,24 @@ function parseCriteria(criteria) {
         }];
     }
 
+    if (~['false', 'true'].indexOf((criteria.done || '').toLowerCase())) search.done = (criteria.done.toLowerCase() === 'true');
+
     return search;
 }
 
 /**
- * Assemble a MongoDB Regex criterion, with or without the case-'i'nsenstive
- * flag.
+ *  Assemble a MongoDB Regex criterion, with or without the case-'i'nsenstive
+ *  flag.
  *
- * @param {String} value
- * @param {Boolean} insensitive
- * @api private
+ *  @param {String} value
+ *  @param {Boolean} sensitive (default is false)
+ *  @api private
  */
-function regexCriterion(value, insenstive) {
-    var criterion = {
-        $regex: value,
-    };
+function regexCriterion(value, senstive) {
+    var criterion = {};
 
-    if (insenstive) criterion.$options = 'i';
+    criterion.$regex = value;
+    if (!senstive) criterion.$options = 'i';
 
     return criterion;
 }
