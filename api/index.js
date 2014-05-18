@@ -18,22 +18,10 @@ module.exports = (function () {
 
     db.connect(function (err, collection) {
         if (err) throw err;
-
         todos = new Todos(collection);
     });
 
-    // Get a specific Todo by (Object)ID
-    router.get('/todos/:id', function (req, res, next) {
-        todos.get(req.params.id, function (err, todo) {
-            if (err) return next(err);
-
-            if (!todo) return res.json(404);
-
-            return res.json(todo);
-        });
-    });
-
-    // Get a list of db
+    // Get a list of Todos
     router.get('/todos', function (req, res, next) {
         todos.find(req.query).toArray(function (err, result) {
             if (err) return next(err);
@@ -42,45 +30,101 @@ module.exports = (function () {
         });
     });
 
+    // Get a specific Todo by (Object)ID
+    router.get('/todos/:id', function (req, res, next) {
+        handleSimpleActionById(todos.get, req.params.id, res, next);
+    });
+
     // Create a new Todo
-    router.post('/todos', validatePostedTodo, function (req, res, next) {
-        var posted = req.body || {};
-
-        var todo = {
-            title: posted.title,
-            body: posted.body,
-            done: false
-        };
-
-        todos.save(todo, function (err, saved) {
+    router.post('/todos', validateReqBody, function (req, res, next) {
+        todos.create(req.body, function (err, todo) {
             if (err) return next(err);
 
-            if (!saved) return res.json(409, {
+            if (!todo) return res.json(409, {
                 message: "Todo already exists",
-                todo: todo
+                todo: req.body
             });
 
-            return res.json(201, saved);
+            return res.json(201, todo);
         });
     });
 
-    // Kill a Todo
-    router.delete('/todos/:id', function (req, res, next) {
-        todos.remove(req.params.id, function (err, todo, count) {
+    router.put('/todos/:id', validateReqBody, function (req, res, next) {
+        todos.update(req.params.id, req.body, function (err, todo) {
             if (err) return next(err);
 
-            if (!todo || !count) return res.json(404, {
-                message: "Not found"
+            if (!todo) return res.json(404, {
+                message: "Not found, did not update",
+                todo: req.body
             });
 
-            delete todo._id;
+            return res.json(200, todo)
+        });
+    });
+
+    // Update a todo
+    router.patch('/todos/:id', function (req, res, next) {
+        var posted = req.body || {};
+
+        console.log(req.body);
+
+        todos.update(req.params.id, posted, function (err, todo) {
+            if (err) return next(err);
+
+            if (!todo) return res.json(404, {
+                message: "Not found",
+                _id: req.params.id
+            });
+
+            return res.json(200, todo);
+        });
+    });
+
+    // Mark a Todo as done by (Object)ID
+    router.post('/done', function (req, res, next) {
+        handleSimpleActionById(todos.done, req.body._id, res, next);
+    });
+    // Kill a Todo by (Object)ID
+    router.delete('/todos', function (req, res, next) {
+        handleSimpleActionById(todos.remove, req.body._id, res, next);
+    });
+
+    /**
+     *  Handles a Todo action that requires an ID and returns either a Todo (if successful)
+     *  or `null` (if not found), and responds with either a 200 OK and the Todo,
+     *  or a 404 Not Found (with a message, including the ID that was attempted)
+     *
+     *  @param {Function} action to apply
+     *  @param {String} ID to use
+     *  @param {Object} Express 'Response' object
+     *  @param {Function} Express 'Next' function
+     *  @api private
+     */
+    function handleSimpleActionById(action, id, res, next) {
+        action.call(todos, id, function (err, todo) {
+            if (err) return next(err);
+
+            if (!todo) return res.json(404, {
+                message: "Not found",
+                _id: id
+            });
 
             res.json(200, todo);
         });
+    }
 
-    });
-
-    function validatePostedTodo(req, res, next) {
+    /**
+     *  Post Body Validation Middleware to check a new Todo.
+     *
+     *  If the Todo is valid, it will carry on.  If it's not, it will return a 400
+     *  with an approprate error message.
+     *
+     *  @param {Object} Express 'Request' object
+     *  @param {Object} Express 'Response' object
+     *  @param {Function} Express 'Next' function
+     *  @api private
+     */
+    function validateReqBody(req, res, next) {
         var posted = req.body;
         var errorMessage;
 
@@ -96,7 +140,7 @@ module.exports = (function () {
         });
 
         var extraKeys = Object.keys(req.body).filter(function (key) {
-            return !(~['title', 'body'].indexOf(key));
+            return !(~['title', 'body', 'done', '_id'].indexOf(key));
         });
 
         if (extraKeys.length) return res.json(400, {
@@ -117,11 +161,13 @@ module.exports = (function () {
     router.use(function apiErrorHandler(err, req, res, next) {
         if (!err) return next();
 
-        return res.json(500, {
+        var errorResponse = {
             message: "Application error",
             error: err.message,
             stack: err.stack
-        });
+        };
+
+        return res.json(500, errorResponse);
     });
 
     return router;

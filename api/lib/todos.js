@@ -28,12 +28,8 @@ function Todos(collection) {
  *  @api public
  */
 Todos.prototype.get = function (id, next) {
-    var _id;
-    try {
-        _id = new Mongo.ObjectID(id);
-    } catch (err) {
-        return next(err);
-    };
+    var _id = parseObjectId(id);
+    if (_id instanceof Error) return next(_id);
 
     this._collection.findOne({
         _id: _id
@@ -66,16 +62,16 @@ Todos.prototype.find = function (criteria, next) {
 };
 
 /**
- * Save a Todo.  You'll get an error if the title or body are not valid.
+ * Save a Todo.
  *
  * Callback will get any errors (or null), and the inserted Todo
  * (or null if it is a duplicate title).
  *
  * @param {Todo} todo
- * @param {Function} next
+ * @param {Function} next (error, todo)
  * @api public
  */
-Todos.prototype.save = function (todo, next) {
+Todos.prototype.create = function (todo, next) {
     if (!todo) return next(new Error("Todo was undefined"));
 
     if (!todo.title || typeof todo.body !== 'string') {
@@ -86,47 +82,132 @@ Todos.prototype.save = function (todo, next) {
     }
 
     var _todo = {
-        title: todo.title,
-        body: todo.body,
+        title: todo.title.toString(),
+        body: todo.body.toString(),
         done: false
     };
 
     this._collection.insert(_todo, {
         w: 1
-    }, function (err, result) {
+    }, function (err, inserted) {
         // If this is a duplicate key error, don't pass it along
         if (err && err.code == 11000) err = null;
 
-        result = (!result) ? null : result[0];
+        inserted = (!inserted) ? null : inserted[0];
 
-        return next(err, result);
+        return next(err, inserted);
     });
 }
 
+/**
+ * Remove a Todo.
+ *
+ * Callback will get any errors (or null), and the removed Todo.
+ *
+ * @param {Todo} todo
+ * @param {Function} next (error, todo)
+ * @api public
+ */
 Todos.prototype.remove = function (id, next) {
-    var _id;
-    try {
-        _id = new Mongo.ObjectID(id);
-    } catch (err) {
-        return next(err, 0);
-    };
+    var _id = parseObjectId(id);
+    if (_id instanceof Error) return next(_id);
 
     var _collection = this._collection;
 
-    _collection.findOne({
+    this._collection.findAndRemove({
         _id: _id
-    }, function (err, todo) {
-        if (err && !todo) return next(err, null, 0);
+    }, [
+        ['_id', 1]
+    ], function (err, todo) {
+        if (err) return next(err);
 
-        _collection.remove({
-            _id: todo._id
-        }, {
-            w: 1
-        }, function (err, count) {
-            return next(err, todo, count);
-        });
+        if (todo) delete todo['_id'];
+
+        return next(err, todo);
     });
 };
+
+/**
+ * Update a Todo, given an ID.  Can handle one, some, or many of the fields.
+ *
+ * Callback will get any errors (or null), and the updated Todo
+ * (or null if it didn't update).
+ *
+ * @param {Todo} todo
+ * @param {Function} next (error, todo)
+ * @api public
+ */
+Todos.prototype.update = function (id, values, next) {
+    var _id = parseObjectId(id);
+    if (_id instanceof Error) return next(_id);
+
+    if (!values) return next(new Error("No values provided"));
+
+    var fields = {};
+    if (values.title) fields.title = values.title.toString();
+    if (values.body) fields.body = values.body.toString();
+    if ('done' in values) fields.done = (typeof values.done === 'string') ? values.done === 'true' : !! values.done;
+
+    var _collection = this._collection;
+
+    this._collection.findAndModify({
+        _id: _id
+    }, [
+        ['_id', 1]
+    ], {
+        $set: fields
+    }, {
+        w: 1,
+        new: true,
+    }, function (err, todo) {
+        return next(err, todo);
+    });
+}
+
+/**
+ * Mark a Todo as (un)done, given an ID.
+ *
+ * Callback will get any errors (or null), and the updated Todo
+ * (or null if it didn't update).
+ *
+ * @param {Todo} todo
+ * @param {Boolean} OPTIONAL set 'done' to true (Default) or false
+ * @param {Function} next (error, todo)
+ * @api public
+ */
+Todos.prototype.done = function (id, value, next) {
+    if (!next && typeof value === 'function') {
+        next = value;
+        value = true;
+    }
+
+    return this.update(id, {
+        done: value
+    }, next);
+}
+
+/**
+ * Parse a MongoDB Object  criteria object and produce a valid MongoDB Search object.
+ *
+ * Valid criteria are:
+ *
+ *      done    {Boolean}   done or not
+ *      text    {String}    string to search for in both title and body (via regex)
+ *      title   {String}    string to search for in the title (via regex)
+ *      body    {String}    string to search for in the body (via regex)
+ *      case    {Boolean}   case-sensitive regexes (default) or not
+ *
+ * @param {Object} criteria
+ * @return  {Object} search
+ * @api private
+ */
+function parseObjectId(id) {
+    try {
+        return new Mongo.ObjectID(id);
+    } catch (err) {
+        return new Error("Bad ID: '" + id + "'");
+    };
+}
 
 /**
  * Parse a search criteria object and produce a valid MongoDB Search object.
@@ -148,7 +229,7 @@ function parseCriteria(criteria) {
 
     var search = {};
 
-    if (~['false', 'true'].indexOf(criteria.done)) search.done = criteria.done === 'true';
+    if (~['false', 'true'].indexOf(criteria.done)) search.done = (criteria.done === 'true');
 
     var caseSensitive = !criteria['case-sensitive'];
 
