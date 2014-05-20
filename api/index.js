@@ -7,6 +7,13 @@ module.exports = (function () {
     var express = require('express');
     var bodyParser = require('body-parser');
 
+    var unirest = require('unirest');
+    var twilioSid = process.env.TWILIO_SID;
+    var twilioToken = process.env.TWILIO_TOKEN;
+    var twilioSmsUrl = 'https://api.twilio.com/2010-04-01/Accounts/' + twilioSid + '/Messages.json';
+
+    var phone = require('node-phonenumber').PhoneNumberUtil.getInstance();
+
     var router = express.Router();
 
     var db = require('./lib/db');
@@ -44,7 +51,7 @@ module.exports = (function () {
      *  Get a Todo by _id
      */
     router.get('/todos/:id', function (req, res, next) {
-        handleSimpleActionById(todos.get, req.params.id, res, next);
+        return handleSimpleActionById(todos.get, req.params.id, res, next);
     });
 
     /**
@@ -67,15 +74,21 @@ module.exports = (function () {
      *  Replace a Todo
      */
     router.put('/todos/:id', validateReqBody, function (req, res, next) {
-        todos.update(req.params.id, req.body, function (err, todo) {
+        var posted = req.body || {};
+
+        todos.update(req.params.id, posted, function (err, todo, markedDone) {
             if (err) return next(err);
 
             if (!todo) return res.json(404, {
                 message: "Not found, did not update",
-                todo: req.body
+                todo: posted
             });
 
-            return res.json(200, todo)
+            if (markedDone) return sendDoneNotification(todo.title, function (wasSent) {
+                return res.json(200, todo);
+            });
+
+            return res.json(200, todo);
         });
     });
 
@@ -83,12 +96,16 @@ module.exports = (function () {
     router.patch('/todos/:id', function (req, res, next) {
         var posted = req.body || {};
 
-        todos.update(req.params.id, posted, function (err, todo) {
+        todos.update(req.params.id, posted, function (err, todo, markedDone) {
             if (err) return next(err);
 
             if (!todo) return res.json(404, {
                 message: "Not found",
                 _id: req.params.id
+            });
+
+            if (markedDone) return sendDoneNotification(todo.title, function (wasSent) {
+                return res.json(200, todo);
             });
 
             return res.json(200, todo);
@@ -97,12 +114,69 @@ module.exports = (function () {
 
     // Mark a Todo as done by (Object)ID
     router.post('/done', function (req, res, next) {
-        handleSimpleActionById(todos.done, req.body._id, res, next);
+        todos.done(req.body._id, function (err, result, markedDone) {
+            if (err) return next(err);
+
+            var todo = result;
+
+            if (!todo) return res.json(404, {
+                message: "Not found",
+                _id: req.body._id
+            });
+
+            if (markedDone) return sendDoneNotification(todo.title, function (wasSent) {
+                return res.json(200, todo);
+            });
+
+            return res.json(200, todo);
+        });
     });
+
     // Kill a Todo by (Object)ID
     router.delete('/todos', function (req, res, next) {
-        handleSimpleActionById(todos.remove, req.body._id, res, next);
+        return handleSimpleActionById(todos.remove, req.body._id, res, next);
     });
+
+    /**
+     *  Send a 'Done' notification SMS via Twilio
+     *
+     *  The Callback receives either a true (message sent) or false (message not sent)
+     *
+     *  @param {String} title Todo title to send in the SMS
+     *  @param {Function} next (sent)
+     *  @api private
+     */
+    function sendDoneNotification(title, next) {
+        if (!twilioSid || !twilioToken) return next(false);
+        var smsTarget = process.env.SMS_TARGET;
+
+        if (!smsTarget) return next(false);
+
+        try {
+            var smsTargetProto = phone.parse(smsTarget, 'US');
+            smsTarget = smsTargetProto.values_['2'] || null;
+        } catch (e) {
+            console.log("Failed to parse SMS target '" + smsTarget + "':", e);
+            return next(false);
+        }
+
+        console.log('Attempting to send SMS to ' + smsTarget);
+
+        unirest.post(twilioSmsUrl).send({
+            To: smsTarget,
+            From: '+17784021808',
+            Body: "'" + title + "' task has been marked as done."
+        }).auth(twilioSid, twilioToken, true).end(function (response) {
+            if (response.error) {
+                console.log('Failed to send SMS to ' + smsTarget + ':', response.error);
+                return next(false);
+            }
+
+            console.log('Sent SMS to ' + smsTarget);
+
+            return next(true);
+        });
+    }
 
     /**
      *  Handles a Todo action that requires an ID and returns either a Todo (if successful)

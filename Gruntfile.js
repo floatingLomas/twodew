@@ -4,7 +4,8 @@ module.exports = function (grunt) {
     grunt.initConfig({
         foreman: {
             dev: {
-                procfile: 'Procfile.dev'
+                procfile: 'Procfile.dev',
+                env: ['twilio.env']
             }
         }
     });

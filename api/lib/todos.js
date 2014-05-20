@@ -144,7 +144,7 @@ Todos.prototype.remove = function (id, next) {
  *  (or null if it didn't update).
  *
  *  @param {Todo} todo
- *  @param {Function} next (error, todo)
+ *  @param {Function} next (error, todo, markedDone)
  *  @api public
  */
 Todos.prototype.update = function (id, values, next) {
@@ -157,9 +157,9 @@ Todos.prototype.update = function (id, values, next) {
     if (values.title) fields.title = values.title.toString();
     if (values.body) fields.body = values.body.toString();
     if ('done' in values)
-        fields.done = (typeof values.done === 'string') ? values.done.toLowerCase() === 'true' : !! values.done;
+        fields.done = (typeof values.done === 'string') ? values.done.toLowerCase() === 'true' : !!values.done;
 
-    var _collection = this._collection;
+    var self = this;
 
     this._collection.findAndModify({
         _id: _id
@@ -169,9 +169,16 @@ Todos.prototype.update = function (id, values, next) {
         $set: fields
     }, {
         w: 1,
-        new: true,
-    }, function (err, todo) {
-        return next(err, todo);
+        new: false,
+    }, function (err, oldTodo) {
+        if (err) return next(err);
+
+        if (!oldTodo) return next(null, null);
+
+        self.get(oldTodo._id, function (err, newTodo) {
+            var markedDone = newTodo.done && !oldTodo.done;
+            return next(err, newTodo, markedDone);
+        });
     });
 }
 
