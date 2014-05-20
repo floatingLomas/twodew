@@ -1,0 +1,39 @@
+// Wrap with Layout
+extends ../layout
+
+// Include mixins
+include ../mixins/message
+include ../mixins/todo-item
+
+// Go!
+block content
+    if messages
+        .row
+            .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3: - each msg in messages
+                +message(msg)
+
+    .row
+        .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+            .row
+                form.form.clearfix(role='form')
+                    .form-group.col-sm-6.col-md-6
+                        label.sr-only(for='search') search
+                        input.form-control(type='text' name='text' placeholder='Text search' value=search.text)
+
+                    .checkbox.col-sm-3.col-md-3
+                        label.pull-right
+                            input(type='checkbox' name='hide' checked=search.hide)
+                            |  hide done
+
+                    .form-group.col-sm-3.col-md-3
+                        .btn-group.pull-right
+                            button.btn.btn-default(type='submit') Go!
+
+    .row
+        .col-sm-8.col-sm-offset-2.col-md-6.col-md-offset-3
+            ul.list-unstyled
+                if todos
+                - each todo in todos
+                    li: +todo-item(todo)
+                else
+                    li: +todo-item()

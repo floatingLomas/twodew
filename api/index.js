@@ -83,8 +83,6 @@ module.exports = (function () {
     router.patch('/todos/:id', function (req, res, next) {
         var posted = req.body || {};
 
-        console.log(req.body);
-
         todos.update(req.params.id, posted, function (err, todo) {
             if (err) return next(err);
 

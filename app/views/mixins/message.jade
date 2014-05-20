@@ -1,0 +1,6 @@
+mixin message(msg)
+    - var types = ['info', 'success', 'warning', 'danger']; // info (0) is default.
+    - var type = types[types.indexOf(msg.type) || 0];
+    .alert.alert-dismissable(class='alert-' + type)
+        button.close(type='button' data-dismiss='alert' aria-hidden='true') &times;
+        span= msg.message

@@ -5,6 +5,7 @@ module.exports = (function () {
      *  Module dependencies
      */
     var express = require('express');
+    var methodOverride = require('method-override');
     var stylus = require('stylus');
     var nib = require('nib');
 
@@ -14,8 +15,6 @@ module.exports = (function () {
      *  Settings
      */
 
-    var methodOverride = require('method-override');
-
     //  Views & Engine
     app.set('view engine', 'jade');
     app.set('views', __dirname + '/views');
@@ -24,8 +23,8 @@ module.exports = (function () {
     app.use(stylus.middleware({
         src: __dirname + '/views',
         dest: __dirname + '/public',
-        debug: true,
         force: true,
+        debug: true,
         compile: function (str, path) {
             return stylus(str)
                 .set('filename', path)

@@ -1,0 +1,57 @@
+// Wrap with Layout
+extends ../layout
+
+include ../mixins/message
+// Go!
+block content
+    .row
+        .col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3
+            if todo._id
+                h4 Edit Todo
+            else
+                h4 Create Todo
+
+    if messages
+        .col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3: - each msg in messages
+            +message(msg)
+
+    form.col-sm-6.col-sm-offset-3.col-md-6.col-md-offset-3(role='form' action=(todo._id ? '/edit/' + todo._id : '/new') method='post')
+        .panel(class=todo.done ? 'panel-success' : 'panel-warning')
+            .panel-heading
+                .panel-title
+                    .row
+                        .col-sm-10.col-xs-10
+                            input.form-control(name='title' type='text' placeholder='Title' value=todo.title)
+                        .col-sm-2.col-xs-2
+                            .checkbox.pull-right
+                                label
+                                    input(name='done' type='checkbox' checked=todo.done)
+                                    |  Done
+
+            .panel-body
+                .row
+                    .col-sm-10.col-xs-10
+                        textarea.form-control(name='body' rows='3' placeholder='Details')= todo.body
+
+                .row
+                    .col-sm-12
+                        a.bottom-right.text-danger(href='/delete' + todo._id data-id=todo._id data-action='delete')
+                                span.glyphicon.glyphicon-trash(title="Delete" + (' ' + todo.title ?  "'" + todo.title + "'": '') + "?")
+            .panel-footer.clearfix
+                - var buttonLabel = 'Create'
+                if todo._id
+                    input(type='hidden' name='_id' value=todo._id)
+                    - buttonLabel = 'Save'
+
+                button.pull-right.btn.btn-primary(type='submit')= buttonLabel
+
+
+    //- .row-fluid
+    //-     form.form-horizontal(role="form")
+    //-         .form-group
+    //-             label.control-label.col-sm-2 Title
+    //-             .col-sm-10
+    //-                 input.form-control#title(placeholder="What to do, what to do...")
+    //-         .form-group
+    //-             label.control-label.col-sm-2 Body
+    //-                 textarea.form-control#body(placeholder="Details, details...")
