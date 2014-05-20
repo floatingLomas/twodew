@@ -5,7 +5,7 @@
  */
 module.exports = function Todos() {
     var mongo = require('mongodb');
-    var mongoUri = process.env.MONGOHQ_URI || process.env.MONGOLAB_URI || 'mongodb://localhost/TwoDew';
+    var mongoUri = process.env.MONGOHQ_URL || 'mongodb://localhost/TwoDew';
 
     var _db = null;
     var _collection = null;
