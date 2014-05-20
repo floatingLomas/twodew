@@ -239,7 +239,7 @@ function parseCriteria(criteria) {
 
     var search = {};
 
-    var caseSensitive = !criteria['case-sensitive'];
+    var caseSensitive = criteria['case-sensitive'];
 
     if (criteria.title) search.title = regexCriterion(criteria.title, caseSensitive);
     if (criteria.body) search.body = regexCriterion(criteria.body, caseSensitive);
