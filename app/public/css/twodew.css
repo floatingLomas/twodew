@@ -1,8 +1,52 @@
 
-/* line 2 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 23 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 
 /* line 2 : /Users/jonathan/mashape/twodew/node_modules/stylus/lib/functions/index.styl */
 
 /* line 297 : /Users/jonathan/mashape/twodew/node_modules/stylus/lib/functions/index.styl */
 
 /* line 2 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/index.styl */
+
+/* line 3 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+body {
+  padding-top: 60px;
+}
+
+/* line 9 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+div.panel-footer {
+  background-color: #fff;
+}
+
+/* line 11 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+
+/* line 12 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+.btn .follows-glyphicon {
+  padding-left: 8px;
+}
+
+/* line 14 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+
+/* line 15 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+.panel-heading.todo-done {
+  background-image: -webkit-linear-gradient(top, #c1ff8f 0%, #64ff0a 100%);
+  background-image: -moz-linear-gradient(top, #c1ff8f 0%, #64ff0a 100%);
+  background-image: -o-linear-gradient(top, #c1ff8f 0%, #64ff0a 100%);
+  background-image: -ms-linear-gradient(top, #c1ff8f 0%, #64ff0a 100%);
+  background-image: linear-gradient(to bottom, #c1ff8f 0%, #64ff0a 100%);
+}
+
+/* line 17 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+.panel-heading.todo-not-done {
+  background-image: -webkit-linear-gradient(top, #ffce91 0%, #ff920a 100%);
+  background-image: -moz-linear-gradient(top, #ffce91 0%, #ff920a 100%);
+  background-image: -o-linear-gradient(top, #ffce91 0%, #ff920a 100%);
+  background-image: -ms-linear-gradient(top, #ffce91 0%, #ff920a 100%);
+  background-image: linear-gradient(to bottom, #ffce91 0%, #ff920a 100%);
+}
+
+/* line 19 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+.bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 15px;
+}
