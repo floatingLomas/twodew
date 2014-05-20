@@ -154,7 +154,7 @@ module.exports = (function () {
             if (response.error) return next(response.error);
 
             return res.render('partials/confirm-delete', {
-                pageTitle: "TwoDew: Bye bye, '" + req.body.title + "'!",
+                pageTitle: "TwoDew: Bye bye, '" + response.body.title + "'!",
                 todo: response.body
             });
         });
