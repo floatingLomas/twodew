@@ -1,6 +1,9 @@
 # Bower components
 app/public/vendor
 
+# Stylus-generate CSS
+app/public/css
+
 # Logs
 logs
 *.log
