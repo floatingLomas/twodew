@@ -1,21 +1,17 @@
 {
   "name": "twodew",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple todo",
   "private": true,
   "authors": [
     "Jonathan Lomas <jonathan@floatinglomas.ca>"
   ],
   "ignore": [
+    ".*",
     "**/.*",
     "node_modules",
-    "bower_components",
+    "app/public/vendor",
     "test",
     "tests"
-  ],
-  "dependencies": {
-    "ember": "~1.5.1",
-    "ember-addons.bs_for_ember": "~0.7.0",
-    "bootstrap": "~3.1.1"
-  }
+  ]
 }

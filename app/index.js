@@ -39,6 +39,7 @@ module.exports = (function () {
 
     app.use(require('./routes'));
 
+    // Error handler
     app.use(function (err, req, res, next) {
         return res.render('error', {
             pageTitle: 'TwoDew: Oops!',
