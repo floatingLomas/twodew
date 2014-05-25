@@ -1,39 +1,46 @@
-.nav
-    float left
-
-    height 100%
-
-    padding-bottom 1000px
-    margin-bottom -1000px
-
 .logo-container
     background todo-blue-color
-    width nav-width
     height logo-height
 
 .menu-container
     background linear-gradient(top, #192229, #161e24)
 
     width nav-width
-    height 100%
+    height inherit
 
-ul.unstyled
-    padding-top 51px
+    overflow hidden
+    padding-bottom 500px
+    margin-bottom -500px
 
-    padding-left 29px
-    padding-right 29px
+ul.unstyled.nav-menu
+    padding-top 40px
+
+    height inherit
 
     list-style none
+
+    li.separator
+        background #2c3947
+        height 1px
+        width 100%
+
+        margin-top 18px
+        margin-bottom 18px
 
     li.menu-item
         color white
         font-size 24px
 
         display inline-block
-        padding-bottom 24px
+
+        padding-left 24px
+        padding-right 24px
+
+        padding-top 28px
+        padding-bottom 30px
 
         &:first-child
-            padding-bottom 34px
+            padding-bottom 40px
 
         &.active
             color todo-blue-color
@@ -42,7 +49,7 @@ ul.unstyled
             color todo-blue-color
             font-size 34px
 
-            padding-right 19px
+            padding-right 14px
 
         span.icon-plus-circled
             color todo-add-color

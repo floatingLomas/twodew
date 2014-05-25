@@ -1,54 +1,61 @@
 doctype html
 html(lang='en')
+    link(href='/vendor/bootstrap/dist/css/bootstrap.css' rel='stylesheet' type='text/css')
     link(href='/css/twodew.css' rel='stylesheet' type='text/css')
 
 body
-    .nav
-        .logo-container
-        .menu-container
-            ul.unstyled
-                li.menu-item.active
-                    span.icon-calendar
-                    span= 'Today'
-                li.menu-item
-                    span.icon-calendar
-                    span= 'Week'
-                li.menu-item
-                    span.icon-inbox
-                    span= 'All time'
-                li.menu-item
-                    span.icon-cog
-                    span= 'Settings'
+    .container
+        .top-container.clearfix
+            .col-fixed.logo-container
 
-                li.separator
+            .row-fixed
+                .search
+                    .search-container
+                        span.icon-search
 
-                li.menu-item
-                    span.icon-plus-circled
-                    span= 'Add new'
+                        input.search-box(placeholder='Search for particular task')
 
-    .main
-        .search
-            span
-            input(placeholder='Search for particular task')
+        .bottom-container
+            .col-fixed.menu-container
+                ul.unstyled.nav-menu
+                    li.menu-item.active
+                        span.icon-calendar
+                        span= 'Today'
+                    li.menu-item
+                        span.icon-calendar
+                        span= 'Week'
+                    li.menu-item
+                        span.icon-inbox
+                        span= 'All time'
+                    li.menu-item
+                        span.icon-cog
+                        span= 'Settings'
 
-        .transition
+                    li.separator
 
-        .list
-            .day
-                .day-header
-                    span.day-name= 'Today '
-                    span.day-date= 'Wed May 14'
-                    button.day-action.pull-right
-                        | Mark everything
-                        span.dropmenu-icon
+                    li.menu-item
+                        span.icon-plus-circled
+                        span= 'Add new'
 
-                ul.unstyled.todos
-                    li.todo
-                        .todo-icon
-                        .todo-content
-                            .todo-meta.clearfix
-                                span.todo-due.pull-left= '21:00'
-                                span.gear-icon.pull-right
+            .row-fixed
+                    .transition
 
-                            .todo-title= 'Todo Title'
-                            .todo-body= 'Todo Body'
+                    .main
+                        .day
+                            .day-header
+                                span.day-name= 'Today '
+                                span.day-date= 'Wed May 14'
+                                button.day-action.pull-right
+                                    | Mark everything
+                                    span.dropmenu-icon
+
+                            ul.unstyled.todos
+                                li.todo
+                                    .todo-icon
+                                    .todo-content
+                                        .todo-meta.clearfix
+                                            span.todo-due.pull-left= '21:00'
+                                            span.gear-icon.pull-right
+
+                                        .todo-title= 'Todo Title'
+                                        .todo-body= 'Todo Body'
