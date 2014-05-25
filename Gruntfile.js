@@ -10,6 +10,9 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('serve', ['foreman']);
+    grunt.registerTask('build', []);
+
+    grunt.registerTask('serve', ['build', 'foreman']);
+
     grunt.registerTask('default', 'serve');
 };

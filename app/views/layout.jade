@@ -1,44 +1,54 @@
 doctype html
 html(lang='en')
-    link(rel='/css/twodew.styl' type='text/css')
+    link(href='/css/twodew.css' rel='stylesheet' type='text/css')
 
 body
-    .row
-        .nav
-            .logo= 'Logo goes here...'
-            .menu
-                ul.unstyled
-                    li.menu-item: span= 'Today'
-                    li.menu-item: span= 'Week'
-                    li.menu-item: span= 'All time'
-                    li.menu-item: span= 'Settings'
-                    
-                    li.separator
+    .nav
+        .logo-container
+        .menu-container
+            ul.unstyled
+                li.menu-item.active
+                    span.icon-calendar
+                    span= 'Today'
+                li.menu-item
+                    span.icon-calendar
+                    span= 'Week'
+                li.menu-item
+                    span.icon-inbox
+                    span= 'All time'
+                li.menu-item
+                    span.icon-cog
+                    span= 'Settings'
 
-                    li.action-item: span= 'Add new'
-                
-        .main
-            .search
-                span.search-icon
-                input(placeholder='Search for particular task')
+                li.separator
 
-            .container
-                .day
-                    .day-header
-                        span.day-name= 'Today '
-                        span.day-date= 'Wed May 14'
-                        button.day-action.pull-right
-                            | Mark everything
-                            span.dropmenu-icon
+                li.menu-item
+                    span.icon-plus-circled
+                    span= 'Add new'
 
-                    ul.unstyled.todos
-                        li.todo
-                            .todo-icon
-                            .todo-content
-                                .todo-meta.clearfix
-                                    span.todo-due.pull-left= '21:00'
-                                    span.gear-icon.pull-right
+    .main
+        .search
+            span
+            input(placeholder='Search for particular task')
 
-                                .todo-title= 'Title'                                    
-                                .todo-body= 'Body'
+        .transition
 
+        .list
+            .day
+                .day-header
+                    span.day-name= 'Today '
+                    span.day-date= 'Wed May 14'
+                    button.day-action.pull-right
+                        | Mark everything
+                        span.dropmenu-icon
+
+                ul.unstyled.todos
+                    li.todo
+                        .todo-icon
+                        .todo-content
+                            .todo-meta.clearfix
+                                span.todo-due.pull-left= '21:00'
+                                span.gear-icon.pull-right
+
+                            .todo-title= 'Todo Title'
+                            .todo-body= 'Todo Body'

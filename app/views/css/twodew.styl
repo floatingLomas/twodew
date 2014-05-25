@@ -1,2 +1,22 @@
+// Fonts have to be first for Montserrat to load/work
+@import 'fonts'
+
 @import 'nib'
 
+global-reset()
+
+// Variable definitions
+todo-blue-color = #09bdef
+todo-add-color = #47ec6e
+container-color = #f0f3f5
+
+nav-width = 250px
+logo-height = 109px
+
+body
+    font-family 'Montserrat', sans-serif
+    margin 0
+    padding 0
+
+@import 'navigation'
+@import 'content'
