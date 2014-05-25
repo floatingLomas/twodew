@@ -6,48 +6,6 @@ html(lang='en')
 
 body
     .container
-        .top-container.clearfix
-            .col-fixed.logo-container
-
-            .row-fixed
-                .search
-                    .search-container
-                        span.icon-search
-
-                        input.search-box(placeholder='Search for particular task')
-
-        .bottom-container
-            .col-fixed.menu-container
-                include ./navigation
-
-            .row-fixed
-                    .transition
-
-                    .main
-                        .list
-                            .day-header
-                                span.day-name= 'Today '
-                                span.day-date= 'Wed May 14'
-
-
-                                .btn-group.pull-right
-                                    button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
-                                        span= 'Mark everything '
-                                        span.icon-down-dir
-
-                                    ul.dropdown-menu(role='menu')
-                                        li: a(href="#")= 'Done'
-                                        li: a(href="#")= 'Incomplete'
-
-                            ul.unstyled.todos
-                                li.todo
-                                    .todo-icon
-                                    .todo-content
-                                        .todo-meta.clearfix
-                                            span.todo-due.pull-left= '21:00'
-                                            span.gear-icon.pull-right
-
-                                        .todo-title= 'Todo Title'
-                                        .todo-body= 'Todo Body'
+        block content
 
 include ./scripts

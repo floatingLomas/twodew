@@ -1,99 +1,107 @@
-search-box-color = #b4bec8
-
-.search
-    height logo-height
-    width 100%
-
-    .search-container
-        padding-top 38px
-        margin-left 26px
-        width calc(100% \- 26px)
-
-        span.icon-search
-            color #3f4e5a
-            font-size 38px
-            float left
-
-input.search-box
-    padding-top 7px
-    padding-left 20px
-
-    width calc(100% \- 26px \- 38px \- 20px \-20px)
-
-    border none
-
-    font-size 22px
-    letter-spacing 1px
-
-    color search-box-color
-
-    &::-webkit-input-placeholder
-        color search-box-color
-    &:-moz-placeholder
-        color search-box-color
-    &::-moz-placeholder
-        color search-box-color
-    &:-ms-input-placeholder
-        color search-box-color
-
-.transition
+.transition // gradient line between search and the main content
     height 6px
     width 100%
     background linear-gradient(top, #d2d5d6, container-color)
 
 .main
+    width 100%
     background-color container-color
-
     height inherit
     overflow hidden
     padding-bottom 500px
     margin-bottom -500px
 
 .list
-    padding-top 42px
+    width 100%
+    padding-top 44px
+    padding-left 44px
+    padding-right 48px
 
-    padding-left 53px
-    padding-right 53px
+.day-header
+    width 100%
 
-.btn-mark-all
-    width 258px
-    height 61px
+    padding-top 24px
+    padding-bottom 48px
 
-    background linear-gradient(top, #cfd5dc, #b0b9c5)
-    border-color #9facb7
+    font-size 26px
 
-    font-size 22px
-    color white !important
-    text-shadow #9facb7 1px 1px
+icon-space-width = 168px
+icon-circle-diameter = 112px
+icon-connector-line-width = 10px
+
+.todo
+    height 100%
+
+.todo-status
+    display table-cell
+    position relative
+    width icon-space-width
+
+    &::before
+        position absolute
+        content ''
+        left (icon-circle-diameter / 2)
+        height 100%
+        border-left icon-connector-line-width solid black
+        z-index 999
+
+.todo-icon-space
+    position relative
+    padding-top 69px
+    padding-left 4px
+
+.todo-icon-circle
+    margin 0
+    padding 0
+
+    display table-cell
+    vertical-align middle
+    text-align center
+
+    draw-circle(icon-circle-diameter)
+
+    &.overdue
+        background-color overdue-circle-color
+
+    &.complete
+        background-color complete-circle-color
+
+    span
+        color white
+        font-size 48px
+
+.todo-content
+    display table-cell
+    width "calc(100% - %s)" % (icon-space-width)
+
+    margin-bottom 36px
+
+    padding-top 34px
+    padding-right 28px
+    padding-bottom 48px
+    padding-left 28px
+
+    background-color white
+    box-shadow 0 1px 2px rgba(0, 0, 0, .125)
+
+    font-size 24px
     letter-spacing 1px
 
-.btn-group.open .btn-mark-all
-    background linear-gradient(top, #afb9c4, #cfd5db)
-    // border-color #9facb7
+.todo-meta
+    color todo-meta-color
+    letter-spacing .85px
 
-.dropdown-menu
+.todo-title
+    color todo-title-color
+    font-size 39px
+    letter-spacing .4px
+
+    padding-top 28px
+    padding-bottom 20px
+
+.todo-body
     font-size 24px
+    color todo-body-color
+    letter-spacing .9px
+    line-height 1.65em
 
-    border 0
-    box-shadow 0 0 36px rgba(0, 0, 0, .3)
-
-    margin-top 29px
-    padding-top 12px
-    padding-bottom 18px
-    padding-left 11px
-    padding-right 44px
-
-    li
-        padding 5px
-
-    ::before
-        triangle-size = 10px
-
-        position absolute
-        top -(triangle-size)
-        right 40px
-        display inline-block
-        border-right triangle-size solid transparent
-        border-bottom triangle-size solid white
-        border-left triangle-size solid transparent
-        content ''

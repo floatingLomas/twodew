@@ -1,5 +1,5 @@
 
-/* line 43 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 72 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 
 /* line 2 : /Users/jonathan/mashape/twodew/node_modules/stylus/lib/functions/index.styl */
 
@@ -12,7 +12,7 @@
 
 /* line 5 : /Users/jonathan/mashape/twodew/app/views/css/fonts.styl */
 
-/* line 100 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/index.styl */
+/* line 107 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/index.styl */
 
 /* line 14 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/index.styl */
 
@@ -32,7 +32,7 @@
 
 /* line 197 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/flex.styl */
 
-/* line 100 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/gradients.styl */
+/* line 107 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/gradients.styl */
 
 /* line 94 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/gradients.styl */
 
@@ -60,7 +60,7 @@
 
 /* line 79 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/reset.styl */
 
-/* line 100 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/text/index.styl */
+/* line 107 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/text/index.styl */
 
 /* line 5 : /Users/jonathan/mashape/twodew/node_modules/nib/lib/nib/text/index.styl */
 
@@ -193,7 +193,8 @@ a img {
   border: none;
 }
 
-/* line 18 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 28 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+html,
 body {
   margin: 0;
   padding: 0;
@@ -203,25 +204,30 @@ body {
   position: absolute;
 }
 
-/* line 37 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 52 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+.light-text {
+  color: #b4bec8;
+}
+
+/* line 55 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 .container {
   margin: 0;
   padding: 0;
   width: 100%;
 }
 
-/* line 42 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 60 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 .col-fixed,
 .row-fixed {
   float: left;
 }
 
-/* line 45 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 63 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 .col-fixed {
   width: 250px;
 }
 
-/* line 48 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 66 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 .row-fixed {
   width: calc(100% - 250px);
 }
@@ -299,31 +305,31 @@ ul.unstyled.nav-menu li.menu-item span.icon-plus-circled {
   color: #47ec6e;
 }
 
-/* line 100 : /Users/jonathan/mashape/twodew/app/views/css/navigation.styl */
+/* line 56 : /Users/jonathan/mashape/twodew/app/views/css/navigation.styl */
 
-/* line 1 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 56 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 
-/* line 3 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 1 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 .search {
   height: 109px;
   width: 100%;
 }
 
-/* line 7 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 5 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 .search .search-container {
   padding-top: 38px;
   margin-left: 26px;
   width: calc(100% - 26px);
 }
 
-/* line 33 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 16 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 .search .search-container span.icon-search {
   color: #3f4e5a;
   font-size: 38px;
   float: left;
 }
 
-/* line 37 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 20 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 input.search-box {
   padding-top: 7px;
   padding-left: 20px;
@@ -334,54 +340,31 @@ input.search-box {
   color: #b4bec8;
 }
 
-/* line 45 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 28 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 input.search-box::-webkit-input-placeholder {
   color: #b4bec8;
 }
 
-/* line 47 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 30 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 input.search-box:-moz-placeholder {
   color: #b4bec8;
 }
 
-/* line 49 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 32 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 input.search-box::-moz-placeholder {
   color: #b4bec8;
 }
 
-/* line 51 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 34 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 input.search-box:-ms-input-placeholder {
   color: #b4bec8;
 }
 
-/* line 53 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
-.transition {
-  height: 6px;
-  width: 100%;
-  background: -webkit-linear-gradient(top, #d2d5d6, #f0f3f5);
-  background: -moz-linear-gradient(top, #d2d5d6, #f0f3f5);
-  background: -o-linear-gradient(top, #d2d5d6, #f0f3f5);
-  background: -ms-linear-gradient(top, #d2d5d6, #f0f3f5);
-  background: linear-gradient(to bottom, #d2d5d6, #f0f3f5);
-}
+/* line 36 : /Users/jonathan/mashape/twodew/app/views/css/search.styl */
 
-/* line 57 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
-.main {
-  background-color: #f0f3f5;
-  height: inherit;
-  overflow: hidden;
-  padding-bottom: 500px;
-  margin-bottom: -500px;
-}
+/* line 36 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
 
-/* line 63 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
-.list {
-  padding-top: 42px;
-  padding-left: 53px;
-  padding-right: 53px;
-}
-
-/* line 67 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 4 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
 .btn-mark-all {
   width: 258px;
   height: 61px;
@@ -397,7 +380,7 @@ input.search-box:-ms-input-placeholder {
   letter-spacing: 1px;
 }
 
-/* line 76 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 16 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
 .btn-group.open .btn-mark-all {
   background: -webkit-linear-gradient(top, #afb9c4, #cfd5db);
   background: -moz-linear-gradient(top, #afb9c4, #cfd5db);
@@ -406,7 +389,7 @@ input.search-box:-ms-input-placeholder {
   background: linear-gradient(to bottom, #afb9c4, #cfd5db);
 }
 
-/* line 79 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 20 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
 .dropdown-menu {
   font-size: 24px;
   border: 0;
@@ -420,19 +403,19 @@ input.search-box:-ms-input-placeholder {
   padding-right: 44px;
 }
 
-/* line 35 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+/* line 44 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
 html.ie8 .dropdown-menu,
 html.ie7 .dropdown-menu,
 html.ie6 .dropdown-menu {
   border: 2px solid rgba(0,0,0,0.3);
 }
 
-/* line 88 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 32 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
 .dropdown-menu li {
   padding: 5px;
 }
 
-/* line 90 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+/* line 35 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
 .dropdown-menu ::before {
   position: absolute;
   top: -10px;
@@ -442,4 +425,151 @@ html.ie6 .dropdown-menu {
   border-bottom: 10px solid #fff;
   border-left: 10px solid transparent;
   content: '';
+}
+
+/* line 107 : /Users/jonathan/mashape/twodew/app/views/css/mark-all.styl */
+
+/* line 107 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+
+/* line 1 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.transition {
+  height: 6px;
+  width: 100%;
+  background: -webkit-linear-gradient(top, #d2d5d6, #f0f3f5);
+  background: -moz-linear-gradient(top, #d2d5d6, #f0f3f5);
+  background: -o-linear-gradient(top, #d2d5d6, #f0f3f5);
+  background: -ms-linear-gradient(top, #d2d5d6, #f0f3f5);
+  background: linear-gradient(to bottom, #d2d5d6, #f0f3f5);
+}
+
+/* line 6 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.main {
+  width: 100%;
+  background-color: #f0f3f5;
+  height: inherit;
+  overflow: hidden;
+  padding-bottom: 500px;
+  margin-bottom: -500px;
+}
+
+/* line 14 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.list {
+  width: 100%;
+  padding-top: 44px;
+  padding-left: 44px;
+  padding-right: 48px;
+}
+
+/* line 20 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.day-header {
+  width: 100%;
+  padding-top: 24px;
+  padding-bottom: 48px;
+  font-size: 26px;
+}
+
+/* line 32 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo {
+  height: 100%;
+}
+
+/* line 35 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-status {
+  display: table-cell;
+  position: relative;
+  width: 168px;
+}
+
+/* line 40 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-status::before {
+  position: absolute;
+  content: '';
+  left: 56px;
+  height: 100%;
+  border-left: 10px solid #000;
+  z-index: 999;
+}
+
+/* line 48 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-icon-space {
+  position: relative;
+  padding-top: 69px;
+  padding-left: 4px;
+}
+
+/* line 53 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-icon-circle {
+  margin: 0;
+  padding: 0;
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
+  width: 112px !important;
+  height: 112px !important;
+  background-color: #bfcdd8;
+}
+
+/* line 63 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-icon-circle.overdue {
+  background-color: #f0364c;
+}
+
+/* line 66 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-icon-circle.complete {
+  background-color: #47ec6e;
+}
+
+/* line 69 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-icon-circle span {
+  color: #fff;
+  font-size: 48px;
+}
+
+/* line 73 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-content {
+  display: table-cell;
+  width: calc(100% - 168px);
+  margin-bottom: 36px;
+  padding-top: 34px;
+  padding-right: 28px;
+  padding-bottom: 48px;
+  padding-left: 28px;
+  background-color: #fff;
+  -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.125);
+  -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.125);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.125);
+  font-size: 24px;
+  letter-spacing: 1px;
+}
+
+/* line 44 : /Users/jonathan/mashape/twodew/app/views/css/twodew.styl */
+html.ie8 .todo-content,
+html.ie7 .todo-content,
+html.ie6 .todo-content {
+  border: 2px solid rgba(0,0,0,0.125);
+}
+
+/* line 90 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-meta {
+  color: #bfc7d0;
+  letter-spacing: 0.85px;
+}
+
+/* line 94 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-title {
+  color: #000;
+  font-size: 39px;
+  letter-spacing: 0.4px;
+  padding-top: 28px;
+  padding-bottom: 20px;
+}
+
+/* line 102 : /Users/jonathan/mashape/twodew/app/views/css/content.styl */
+.todo-body {
+  font-size: 24px;
+  color: #636669;
+  letter-spacing: 0.9px;
+  line-height: 1.65em;
 }

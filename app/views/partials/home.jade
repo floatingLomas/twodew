@@ -1,2 +1,42 @@
 // Wrap with Layout
 extends ../layout
+
+block content
+    .top-container.clearfix
+        .col-fixed.logo-container
+
+        .row-fixed
+            .search
+                .search-container
+                    span.icon-search
+
+                    input.search-box(placeholder='Search for particular task')
+
+    .bottom-container
+        .col-fixed.menu-container
+            include ./navigation
+
+        .row-fixed
+                .transition
+
+                .main
+                    .list
+                        .btn-group.pull-right
+                            button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
+                                span= 'Mark everything '
+                                span.icon-down-dir
+
+                            ul.dropdown-menu(role='menu')
+                                li: a(href="#")= 'Done'
+                                li: a(href="#")= 'Incomplete'
+
+
+                        // For day in days
+                        .day
+                            .day-header
+                                | Today.
+                                span.light-text= ' ' + 'Tue May 13'
+
+                            ul.unstyled.todos
+                                include ./todo
+                                include ./todo

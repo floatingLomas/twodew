@@ -1,5 +1,7 @@
 
 .icon-search:before { content: '\e805'; } /* '' */
+.icon-check:before { content: '\e807'; } /* '' */
+.icon-cancel:before { content: '\e808'; } /* '' */
 .icon-plus-circled:before { content: '\e802'; } /* '' */
 .icon-attention:before { content: '\e801'; } /* '' */
 .icon-cog:before { content: '\e804'; } /* '' */

@@ -10,10 +10,20 @@ todo-blue-color = #09bdef
 todo-add-color = #47ec6e
 container-color = #f0f3f5
 
+overdue-circle-color = #f0364c
+complete-circle-color = #47ec6e
+incomplete-circle-color = #bfcdd8
+
+search-text-color = #b4bec8
+
+todo-meta-color = #bfc7d0
+todo-title-color = black
+todo-body-color = #636669
+
 nav-width = 250px
 logo-height = 109px
 
-body
+html, body
     margin 0
     padding 0
 
@@ -33,6 +43,14 @@ box-shadow()
     html.ie6 &
      border 2px solid arguments[length(arguments) - 1]
 
+draw-circle(diameter)
+    border-radius 50%
+    width diameter !important
+    height diameter !important
+    background-color incomplete-circle-color
+
+.light-text
+    color search-text-color
 
 .container
     margin 0
@@ -49,4 +67,8 @@ box-shadow()
     width "calc(100% - %s)" % (nav-width)
 
 @import 'navigation'
+
+@import 'search'
+@import 'mark-all'
+
 @import 'content'
