@@ -1,3 +1,5 @@
+search-box-color = #b4bec8
+
 .search
     height logo-height
     width 100%
@@ -12,23 +14,86 @@
             font-size 38px
             float left
 
-        input.search-box
-            padding-top 7px
-            padding-left 20px
+input.search-box
+    padding-top 7px
+    padding-left 20px
 
-            width calc(100% \- 26px \- 38px \- 20px \-20px)
+    width calc(100% \- 26px \- 38px \- 20px \-20px)
 
-            border none
+    border none
 
-            font-size 22px
-            letter-spacing 1px
+    font-size 22px
+    letter-spacing 1px
+
+    color search-box-color
+
+    &::-webkit-input-placeholder
+        color search-box-color
+    &:-moz-placeholder
+        color search-box-color
+    &::-moz-placeholder
+        color search-box-color
+    &:-ms-input-placeholder
+        color search-box-color
 
 .transition
     height 6px
     width 100%
     background linear-gradient(top, #d2d5d6, container-color)
 
-.list
+.main
     background-color container-color
-    height 100%
-    margin-left nav-width
+
+    height inherit
+    overflow hidden
+    padding-bottom 500px
+    margin-bottom -500px
+
+.list
+    padding-top 42px
+
+    padding-left 53px
+    padding-right 53px
+
+.btn-mark-all
+    width 258px
+    height 61px
+
+    background linear-gradient(top, #cfd5dc, #b0b9c5)
+    border-color #9facb7
+
+    font-size 22px
+    color white !important
+    text-shadow #9facb7 1px 1px
+    letter-spacing 1px
+
+.btn-group.open .btn-mark-all
+    background linear-gradient(top, #afb9c4, #cfd5db)
+    // border-color #9facb7
+
+.dropdown-menu
+    font-size 24px
+
+    border 0
+    box-shadow 0 0 36px rgba(0, 0, 0, .3)
+
+    margin-top 29px
+    padding-top 12px
+    padding-bottom 18px
+    padding-left 11px
+    padding-right 44px
+
+    li
+        padding 5px
+
+    ::before
+        triangle-size = 10px
+
+        position absolute
+        top -(triangle-size)
+        right 40px
+        display inline-block
+        border-right triangle-size solid transparent
+        border-bottom triangle-size solid white
+        border-left triangle-size solid transparent
+        content ''

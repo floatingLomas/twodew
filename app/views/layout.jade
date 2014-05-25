@@ -1,6 +1,7 @@
 doctype html
 html(lang='en')
     link(href='/vendor/bootstrap/dist/css/bootstrap.css' rel='stylesheet' type='text/css')
+    link(href='/vendor/bootstrap/dist/css/bootstrap-theme.css' rel='stylesheet' type='text/css')
     link(href='/css/twodew.css' rel='stylesheet' type='text/css')
 
 body
@@ -17,37 +18,26 @@ body
 
         .bottom-container
             .col-fixed.menu-container
-                ul.unstyled.nav-menu
-                    li.menu-item.active
-                        span.icon-calendar
-                        span= 'Today'
-                    li.menu-item
-                        span.icon-calendar
-                        span= 'Week'
-                    li.menu-item
-                        span.icon-inbox
-                        span= 'All time'
-                    li.menu-item
-                        span.icon-cog
-                        span= 'Settings'
-
-                    li.separator
-
-                    li.menu-item
-                        span.icon-plus-circled
-                        span= 'Add new'
+                include ./navigation
 
             .row-fixed
                     .transition
 
                     .main
-                        .day
+                        .list
                             .day-header
                                 span.day-name= 'Today '
                                 span.day-date= 'Wed May 14'
-                                button.day-action.pull-right
-                                    | Mark everything
-                                    span.dropmenu-icon
+
+
+                                .btn-group.pull-right
+                                    button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
+                                        span= 'Mark everything '
+                                        span.icon-down-dir
+
+                                    ul.dropdown-menu(role='menu')
+                                        li: a(href="#")= 'Done'
+                                        li: a(href="#")= 'Incomplete'
 
                             ul.unstyled.todos
                                 li.todo
@@ -59,3 +49,5 @@ body
 
                                         .todo-title= 'Todo Title'
                                         .todo-body= 'Todo Body'
+
+include ./scripts
