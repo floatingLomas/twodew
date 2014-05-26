@@ -29,32 +29,42 @@ icon-space-width = 168px
 icon-circle-diameter = 112px
 icon-connector-line-width = 10px
 
-.todo
-    height 100%
+circl-offset-from-top = 69px
 
-.todo-status
-    display table-cell
+ul.todos
     position relative
-    width icon-space-width
 
-    &::before
+    &::after
         position absolute
         content ''
         left (icon-circle-diameter / 2)
-        height 100%
-        border-left icon-connector-line-width solid black
-        z-index 999
+        top (circl-offset-from-top + icon-circle-diameter / 2)
+        bottom (circl-offset-from-top + icon-circle-diameter)
+        border-left icon-connector-line-width solid white
+        z-index 0
+
+
+.todo
+    height 100%
+    position relative
+    z-index 1
+
+.todo-status
+    position relative
+    width icon-space-width
 
 .todo-icon-space
     position relative
-    padding-top 69px
+
+    padding-top circl-offset-from-top
     padding-left 4px
+    height 100%
 
 .todo-icon-circle
+    display table-cell
     margin 0
     padding 0
 
-    display table-cell
     vertical-align middle
     text-align center
 
@@ -71,7 +81,6 @@ icon-connector-line-width = 10px
         font-size 48px
 
 .todo-content
-    display table-cell
     width "calc(100% - %s)" % (icon-space-width)
 
     margin-bottom 36px
