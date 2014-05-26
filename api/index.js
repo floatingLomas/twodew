@@ -223,13 +223,15 @@ module.exports = (function () {
 
         if (typeof posted.title !== 'string') errorMessage = "Bad title: '" + JSON.stringify(posted.title) + "'";
         if (typeof posted.body !== 'string') errorMessage = "Bad body: '" + JSON.stringify(posted.body) + "'";
+        if (!posted.due || !Date.parse(posted.due)) errorMessage = "Bad due date: " + JSON.stringify(posted.due) + "'";
+
 
         if (errorMessage) return res.json(400, {
             message: errorMessage
         });
 
         var extraKeys = Object.keys(req.body).filter(function (key) {
-            return !(~['title', 'body', 'done', '_id'].indexOf(key));
+            return !(~['title', 'body', 'done', 'due', '_id'].indexOf(key));
         });
 
         if (extraKeys.length) return res.json(400, {

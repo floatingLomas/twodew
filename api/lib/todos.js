@@ -90,10 +90,14 @@ Todos.prototype.create = function (todo, next) {
     if (!todo.body || typeof todo.body !== 'string') {
         return next(new Error("Bad Todo body: " + JSON.stringify(todo.body)));
     }
+    if (!todo.due || Date.parse(todo.due) === 'NaN') {
+        return next(new Error("Bad Todo due date: " + JSON.stringify(todo.due)));
+    }
 
     var _todo = {
         title: todo.title.toString(),
         body: todo.body.toString(),
+        due: Date.parse(todo.due),
         done: false
     };
 
@@ -156,6 +160,7 @@ Todos.prototype.update = function (id, values, next) {
     var fields = {};
     if (values.title) fields.title = values.title.toString();
     if (values.body) fields.body = values.body.toString();
+    if (values.due && Date.parse(values.due) !== 'NaN') fields.due = Date.parse(values.due);
     if ('done' in values)
         fields.done = (typeof values.done === 'string') ? values.done.toLowerCase() === 'true' : !!values.done;
 
