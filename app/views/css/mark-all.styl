@@ -17,7 +17,7 @@
     background linear-gradient(top, #afb9c4, #cfd5db)
     // border-color #9facb7
 
-.dropdown-menu
+.dropdown-menu.mark-menu
     font-size 24px
 
     border 0
@@ -38,6 +38,34 @@
         position absolute
         top -(triangle-size)
         right 40px
+        display inline-block
+        border-right triangle-size solid transparent
+        border-bottom triangle-size solid white
+        border-left triangle-size solid transparent
+        content ''
+
+.dropdown-menu.edit-menu
+    font-size 24px
+
+    border 0
+    box-shadow 0 0 36px rgba(0, 0, 0, .3)
+
+    margin-top 29px
+
+    padding-top 12px
+    padding-bottom 18px
+    padding-left 30px
+    padding-right 44px
+
+    li
+        padding 5px
+
+    ::before
+        triangle-size = 10px
+
+        position absolute
+        top -(triangle-size)
+        right 5px
         display inline-block
         border-right triangle-size solid transparent
         border-bottom triangle-size solid white

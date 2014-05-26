@@ -26,7 +26,7 @@ block content
                                     span= 'Mark everything '
                                     span.icon-down-dir
 
-                                ul.dropdown-menu(role='menu')
+                                ul.dropdown-menu.mark-menu(role='menu')
                                     li: a(href="#")= 'Done'
                                     li: a(href="#")= 'Incomplete'
 
@@ -46,10 +46,4 @@ block content
                                                         span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && inThePast(todo.due))}")
 
                                             .todo-content.row-fixed
-                                                .todo-meta.clearfix
-                                                    span.todo-due.pull-left= '{{ todo.due | scheduledTime }}'
-                                                    span.gear-icon.pull-right
-
-                                                .todo-title= '{{todo.title}}'
-                                                .todo-body= '{{todo.body}}'
-
+                                                span(ng-include="todo.editing ? 'partials/todo-edit' : 'partials/todo'")

@@ -1,0 +1,22 @@
+.todo-meta.clearfix
+    .todo-due.pull-left= '{{ todo.due | scheduledTime }}'
+    .btn-group.pull-right
+        span.dropdown-toggle(type="button" data-toggle="dropdown")
+            span.icon-cog
+
+        ul.dropdown-menu.edit-menu(role='menu')
+            li: a(tabindex="-1" href="#")
+                span.icon-check
+                span= 'Mark as done'
+            li: a(tabindex="-1" ng-click="todo.editing = true")
+                span.icon-cog
+                span= 'Edit task'
+            li.dropdown-submenu: a(tabindex="-1" href="#")
+                span.icon-calendar
+                span= 'Postpone'
+                ul.dropdown-menu
+                    li= 'Hi there!'
+
+.todo-title= '{{todo.title}}'
+.todo-body= '{{todo.body}}'
+
