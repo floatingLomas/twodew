@@ -29,7 +29,7 @@ var fakeDays = [{
             lastDay: '[Yesterday]',
             sameDay: '[Today]',
             nextDay: '[Tomorrow]',
-            lastWeek: '[last] dddd',
+            lastWeek: '[Last] dddd',
             nextWeek: 'dddd',
             sameElse: 'L'
         }
@@ -68,10 +68,12 @@ var fakeDays = [{
 
     app.controller('WeeklyTodosController', ['$scope', 'Todos',
         function ($scope, Todos) {
-            $scope.days = fakeDays;
+            $scope.days = [];
 
             var todos = Todos.query(function () {
-                console.log(todos);
+                console.log('Received Todos:', todos);
+                $scope.days = todosByDay(todos);
+                console.log('Created By Day:', $scope.days);
             });
 
             $scope.todos = todos;
@@ -80,13 +82,37 @@ var fakeDays = [{
         }
     ]);
 
+    function todosByDay(todos) {
+        var dayMap = {};
+
+        $.each(todos, function (i, todo) {
+            var day = new Date(todo.due).setHours(0, 0, 0, 0);
+            dayMap[day] = dayMap[day] || [];
+            dayMap[day].push(todo);
+        });
+
+        var days = [];
+
+        $.each(dayMap, function (k, todos) {
+            var date = new Date(+k);
+            days.push({
+                date: date,
+                todos: todos
+            });
+        });
+
+        return days;
+    }
+
     function simpleDay(date) {
-        if (!date || !(date instanceof Date)) return date;
+        date = new Date(date);
+        if (!date || date === 'NaN') return date;
         return moment(date).format('ddd MMM D');
     }
 
     function schduledTime(date) {
-        if (!date || !(date instanceof Date)) return date;
+        date = new Date(date);
+        if (!date || date === 'NaN') return date;
         var m = moment(date);
 
         var result = m.format('HH:mm');
@@ -99,7 +125,8 @@ var fakeDays = [{
     }
 
     function inThePast(date) {
-        if (!date || !(date instanceof Date)) return date;
+        date = new Date(date);
+        if (!date || date === 'NaN') return date;
         return moment(date).isBefore();
     }
 })(angular);

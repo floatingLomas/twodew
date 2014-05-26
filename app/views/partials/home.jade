@@ -2,54 +2,54 @@
 extends ../layout
 
 block content
-    .top-container.clearfix
-        .col-fixed.logo-container
+    .container(ng-controller='WeeklyTodosController')
+        .top-container.clearfix
+            .col-fixed.logo-container
 
-        .row-fixed
-            .search
-                .search-container
-                    span.icon-search
+            .row-fixed
+                .search
+                    .search-container
+                        span.icon-search
 
-                    input.search-box(placeholder='Search for particular task')
+                        input.search-box(placeholder='Search for particular task')
+        .bottom-container
+            .col-fixed.menu-container
+                include ./navigation
 
-    .bottom-container
-        .col-fixed.menu-container
-            include ./navigation
+            .row-fixed
+                    .transition
 
-        .row-fixed(ng-controller='WeeklyTodosController')
-                .transition
+                    .main
+                        .list
+                            .btn-group.pull-right
+                                button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
+                                    span= 'Mark everything '
+                                    span.icon-down-dir
 
-                .main
-                    .list
-                        .btn-group.pull-right
-                            button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
-                                span= 'Mark everything '
-                                span.icon-down-dir
-
-                            ul.dropdown-menu(role='menu')
-                                li: a(href="#")= 'Done'
-                                li: a(href="#")= 'Incomplete'
+                                ul.dropdown-menu(role='menu')
+                                    li: a(href="#")= 'Done'
+                                    li: a(href="#")= 'Incomplete'
 
 
-                        // For day in days
-                        .day(ng-repeat='day in days')
-                            .day-header
-                                | {{ day.date | relativeDay }}
-                                span.light-text= ' ' + '{{ day.date | simpleDay }}'
+                            // For day in days
+                            .day(ng-repeat='day in days')
+                                .day-header
+                                    | {{ day.date | relativeDay }}
+                                    span.light-text= ' ' + '{{ day.date | simpleDay }}'
 
-                            ul.unstyled.todos
-                                li(ng-repeat='todo in day.todos')
-                                    .todo.clearfix
-                                        .todo-status.col-fixed.last
-                                            .todo-icon-space
-                                                .todo-icon-circle(ng-class='{ complete: (todo.done), overdue: (!todo.done && inThePast(todo.due)) }')
-                                                    span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && inThePast(todo.due))}")
+                                ul.unstyled.todos
+                                    li(ng-repeat='todo in day.todos')
+                                        .todo.clearfix
+                                            .todo-status.col-fixed.last
+                                                .todo-icon-space
+                                                    .todo-icon-circle(ng-class='{ complete: (todo.done), overdue: (!todo.done && inThePast(todo.due)) }')
+                                                        span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && inThePast(todo.due))}")
 
-                                        .todo-content.row-fixed
-                                            .todo-meta.clearfix
-                                                span.todo-due.pull-left= '{{ todo.due | scheduledTime }}'
-                                                span.gear-icon.pull-right
+                                            .todo-content.row-fixed
+                                                .todo-meta.clearfix
+                                                    span.todo-due.pull-left= '{{ todo.due | scheduledTime }}'
+                                                    span.gear-icon.pull-right
 
-                                            .todo-title= '{{todo.title}}'
-                                            .todo-body= '{{todo.body}}'
+                                                .todo-title= '{{todo.title}}'
+                                                .todo-body= '{{todo.body}}'
 
