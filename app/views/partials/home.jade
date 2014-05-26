@@ -16,7 +16,7 @@ block content
         .col-fixed.menu-container
             include ./navigation
 
-        .row-fixed
+        .row-fixed(ng-controller='WeeklyTodosController')
                 .transition
 
                 .main
@@ -32,11 +32,24 @@ block content
 
 
                         // For day in days
-                        .day
+                        .day(ng-repeat='day in days')
                             .day-header
-                                | Today.
-                                span.light-text= ' ' + 'Tue May 13'
+                                | {{ day.date | relativeDay }}
+                                span.light-text= ' ' + '{{ day.date | simpleDay }}'
 
                             ul.unstyled.todos
-                                include ./todo
-                                include ./todo
+                                li(ng-repeat='todo in day.todos')
+                                    .todo.clearfix
+                                        .todo-status.col-fixed.last
+                                            .todo-icon-space
+                                                .todo-icon-circle(ng-class='{ complete: (todo.done), overdue: (!todo.done && inThePast(todo.due)) }')
+                                                    span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && inThePast(todo.due))}")
+
+                                        .todo-content.row-fixed
+                                            .todo-meta.clearfix
+                                                span.todo-due.pull-left= '{{ todo.due | scheduledTime }}'
+                                                span.gear-icon.pull-right
+
+                                            .todo-title= '{{todo.title}}'
+                                            .todo-body= '{{todo.body}}'
+
