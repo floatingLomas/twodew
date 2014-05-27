@@ -27,8 +27,8 @@ block content
                                     span.icon-down-dir
 
                                 ul.dropdown-menu.mark-menu(role='menu')
-                                    li: a(href="#")= 'Done'
-                                    li: a(href="#")= 'Incomplete'
+                                    li: a(ng-click="markAllDone(true)")= 'Done'
+                                    li: a(ng-click="markAllDone(false)")= 'Incomplete'
 
 
                             // For day in days

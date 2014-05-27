@@ -114,7 +114,7 @@ module.exports = (function () {
 
     // Mark a Todo as done by (Object)ID
     router.post('/done', function (req, res, next) {
-        todos.done(req.body._id, function (err, result, markedDone) {
+        todos.done(req.body._id, req.body.done, function (err, result, markedDone) {
             if (err) return next(err);
 
             var todo = result;
@@ -223,12 +223,15 @@ module.exports = (function () {
 
         if (typeof posted.title !== 'string') errorMessage = "Bad title: '" + JSON.stringify(posted.title) + "'";
         if (typeof posted.body !== 'string') errorMessage = "Bad body: '" + JSON.stringify(posted.body) + "'";
-        if (!posted.due || !Date.parse(posted.due)) errorMessage = "Bad due date: " + JSON.stringify(posted.due) + "'";
-
+        if (!posted.due || new Date(posted.due) === 'NaN') errorMessage = "Bad due date: " + JSON.stringify(posted.due) + "'";
 
         if (errorMessage) return res.json(400, {
             message: errorMessage
         });
+
+        delete posted.editing;
+
+        posted.due = new Date(posted.due);
 
         var extraKeys = Object.keys(req.body).filter(function (key) {
             return !(~['title', 'body', 'done', 'due', '_id'].indexOf(key));
@@ -257,6 +260,8 @@ module.exports = (function () {
             error: err.message,
             stack: err.stack
         };
+
+        console.log(errorResponse);
 
         return res.json(500, errorResponse);
     });

@@ -90,14 +90,16 @@ Todos.prototype.create = function (todo, next) {
     if (!todo.body || typeof todo.body !== 'string') {
         return next(new Error("Bad Todo body: " + JSON.stringify(todo.body)));
     }
-    if (!todo.due || Date.parse(todo.due) === 'NaN') {
+    if (!todo.due || new Date(todo.due) === 'NaN') {
         return next(new Error("Bad Todo due date: " + JSON.stringify(todo.due)));
     }
+
+    if (todo._id) return next(null, null);
 
     var _todo = {
         title: todo.title.toString(),
         body: todo.body.toString(),
-        due: Date.parse(todo.due),
+        due: new Date(todo.due),
         done: false
     };
 
@@ -203,6 +205,8 @@ Todos.prototype.done = function (id, value, next) {
         next = value;
         value = true;
     }
+
+    value = (typeof value === 'boolean') ? value : true;
 
     return this.update(id, {
         done: value

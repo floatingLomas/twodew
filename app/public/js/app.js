@@ -53,8 +53,8 @@ var fakeDays = [{
     });
 
     angular.module('TD.services', ['ngResource']).factory('Todos', function ($resource) {
-        return $resource('/api/:action/:id', {
-            _id: '@id'
+        return $resource('/api/:action/:_id', {
+            _id: '@_id'
         }, {
             query: {
                 method: 'GET',
@@ -62,6 +62,19 @@ var fakeDays = [{
                     action: 'todos'
                 },
                 isArray: true
+            },
+            update: {
+                method: 'PUT',
+                params: {
+                    action: 'todos',
+                    _id: '@_id'
+                }
+            },
+            markDone: {
+                method: 'POST',
+                params: {
+                    action: 'done'
+                }
             }
         });
     });
@@ -70,17 +83,79 @@ var fakeDays = [{
         function ($scope, Todos) {
             $scope.days = [];
 
-            var todos = Todos.query(function () {
-                console.log('Received Todos:', todos);
-                $scope.days = todosByDay(todos);
-                console.log('Created By Day:', $scope.days);
+            $scope.todos = Todos.query(function () {
+                $scope.originalTodos = angular.copy($scope.todos);
+                $scope.days = todosByDay($scope.todos);
             });
 
-            $scope.todos = todos;
-
             $scope.inThePast = inThePast;
+            $scope.dayTimePairings = dayTimePairings;
+
+            $scope.markAllDone = function (done) {
+                $.each($scope.todos, function (i, todo) {
+                    todo.done = done;
+
+                    Todos.markDone({
+                        _id: ''
+                    }, {
+                        _id: todo._id,
+                        done: todo.done
+                    });
+                });
+            }
+
+            $scope.flipDone = flipDone;
+
+            function flipDone(todo) {
+                todo.done = !todo.done;
+
+                Todos.markDone({
+                    _id: ''
+                }, {
+                    _id: todo._id,
+                    done: todo.done
+                });
+            }
+
+            $scope.edit = function (todo) {
+                todo.editing = true;
+            }
+
+            $scope.reset = function (todo) {
+                console.log('Resetting...');
+                $scope.todos = angular.copy($scope.originalTodos);
+                delete todo.editing;
+            }
+
+            $scope.update = function (todo) {
+                console.log('todo to update:', todo);
+
+                todo.$update(function () {
+                    console.log(arguments);
+                    delete todo.editing;
+                });
+            }
         }
     ]);
+
+    function dayTimePairings(due) {
+        var days = 4;
+
+        var pairings = [];
+
+        var date = new Date(due).setMinutes(0, 0);
+        for (var i = 0; i < days * 24; i++) {
+
+            pairings.push({
+                value: date,
+                display: moment(date).format('MM/DD hh:mm')
+            });
+
+            date = new Date(new Date(date).getTime() + 60 * 60 * 1000)
+        }
+
+        return pairings;
+    }
 
     function todosByDay(todos) {
         var dayMap = {};
@@ -94,9 +169,8 @@ var fakeDays = [{
         var days = [];
 
         $.each(dayMap, function (k, todos) {
-            var date = new Date(+k);
             days.push({
-                date: date,
+                date: new Date(+k),
                 todos: todos
             });
         });

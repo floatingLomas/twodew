@@ -1,10 +1,15 @@
-form(role="form")
+form.todo-edit(role="form")
+    .form-group.due-picker
+        label= 'Change date & hour:'
+        select.form-control(ng-options="pair.value as pair.display for pair in dayTimePairings(todo.due)" ng-model="todo.due")
+
     .form-group
         input.form-control(type="text" ng-model="todo.title" placeholder="Title")
 
     .form-group
         textarea.form-control(rows="4" ng-model="todo.body" placeholder="Title")
 
-    .form-group.pull-right
-        button.btn.btn-edit-inline.btn-default(ng-click="resetTodo(todo)")= 'Discard'
-        button.btn.btn-edit-inline.btn-primary(ng-click="saveTodo(todo)")= 'Save'
+    .form-group
+        .pull-right
+            button.btn.btn-edit-inline.btn-default(ng-click="reset(todo)")= 'Discard'
+            button.btn.btn-edit-inline.btn-primary(ng-click="update(todo)")= 'Save'
