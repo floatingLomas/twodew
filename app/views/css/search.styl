@@ -16,7 +16,11 @@ input.search-box
     padding-top 7px
     padding-left 20px
 
-    width calc(100% \- 26px \- 38px \- 20px \-20px)
+    search-box-width = (26px + 38px + 20px + 20px)
+
+    width "-webkit-calc(100% - %s)" % (search-box-width)
+    width "-moz-calc(100% - %s)" % (search-box-width)
+    width "calc(100% - %s)" % (search-box-width)
 
     border none
 

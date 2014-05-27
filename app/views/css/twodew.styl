@@ -23,6 +23,11 @@ todo-body-color = #636669
 nav-width = 250px
 logo-height = 109px
 
+html
+    overflow-y scroll
+    margin 0
+    padding 0
+
 html, body
     margin 0
     padding 0
@@ -57,13 +62,15 @@ draw-circle(diameter)
     padding 0
     width 100%
 
-.col-fixed, .row-fixed
+.nav-col-fixed, .nav-row-fixed
     float left
 
-.col-fixed
+.nav-col-fixed
     width nav-width
 
-.row-fixed
+.nav-row-fixed
+    width "-webkit-calc(100% - %s)" % (nav-width)
+    width "-moz-calc(100% - %s)" % (nav-width)
     width "calc(100% - %s)" % (nav-width)
 
 @import 'navigation'

@@ -1,3 +1,11 @@
+$(function () {
+    polyCalc.run();
+});
+$(window).resize(function () {
+    polyCalc.run();
+});
+
+
 var fakeDays = [{
     date: new Date(2014, 4, 25, 0, 0, 0),
     todos: [{

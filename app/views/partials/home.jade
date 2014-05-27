@@ -4,19 +4,19 @@ extends ../layout
 block content
     .container(ng-controller='WeeklyTodosController')
         .top-container.clearfix
-            .col-fixed.logo-container
+            .nav-col-fixed.logo-container
 
-            .row-fixed
+            .nav-row-fixed
                 .search
                     .search-container
                         span.icon-search
 
                         input.search-box(placeholder='Search for particular task')
         .bottom-container
-            .col-fixed.menu-container
+            .nav-col-fixed.menu-container
                 include ./navigation
 
-            .row-fixed
+            .nav-row-fixed
                     .transition
 
                     .main
@@ -40,10 +40,10 @@ block content
                                 ul.unstyled.todos
                                     li(ng-repeat='todo in day.todos')
                                         .todo.clearfix
-                                            .todo-status.col-fixed.last
+                                            .todo-status.todo-col-fixed.last
                                                 .todo-icon-space
                                                     .todo-icon-circle(ng-class='{ complete: (todo.done), overdue: (!todo.done && inThePast(todo.due)) }')
                                                         span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && inThePast(todo.due))}")
 
-                                            .todo-content.row-fixed
+                                            .todo-content.todo-row-fixed
                                                 span(ng-include="todo.editing ? 'partials/todo-edit' : 'partials/todo'")

@@ -19,6 +19,8 @@
     "bootstrap": "~3.1.1",
     "angular": "~1.2.16",
     "moment": "~2.6.0",
-    "angular-resource": "~1.2.16"
+    "angular-resource": "~1.2.16",
+    "polycalc": "*",
+    "jscssp": "~0.1.1"
   }
 }

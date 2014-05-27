@@ -31,6 +31,17 @@ icon-connector-line-width = 10px
 
 circl-offset-from-top = 69px
 
+.todo-col-fixed, .todo-row-fixed
+    float left
+
+.todo-col-fixed
+    width icon-space-width
+
+.todo-row-fixed
+    width "-webkit-calc(100% - %s)" % (icon-space-width)
+    width "-moz-calc(100% - %s)" % (icon-space-width)
+    width "calc(100% - %s)" % (icon-space-width)
+
 ul.todos
     position relative
 
@@ -51,7 +62,6 @@ ul.todos
 
 .todo-status
     position relative
-    width icon-space-width
 
 .todo-icon-space
     position relative
