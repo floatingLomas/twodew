@@ -55,9 +55,11 @@ var fakeDays = [{
     }).filter('simpleDay', function () {
         return simpleDay;
     }).filter('scheduledTime', function () {
-        return schduledTime;
+        return scheduledTime;
     }).filter('inThePast', function () {
         return inThePast;
+    }).filter('selectDay', function () {
+        return selectDay;
     });
 
     angular.module('TD.services', ['ngResource']).factory('Todos', function ($resource) {
@@ -91,13 +93,25 @@ var fakeDays = [{
         function ($scope, Todos) {
             $scope.days = [];
 
-            $scope.todos = Todos.query(function () {
-                $scope.originalTodos = angular.copy($scope.todos);
-                $scope.days = todosByDay($scope.todos);
-            });
 
             $scope.inThePast = inThePast;
-            $scope.dayTimePairings = dayTimePairings;
+            $scope.upcomingTimes = upcomingTimes;
+
+            $scope.todos = Todos.query(function () {
+                $scope.todos = $.map($scope.todos, function (todo) {
+                    todo.due = (new Date(todo.due)).toISOString()
+
+                    return todo;
+                });
+
+                $scope.originalTodos = angular.copy($scope.todos);
+            })
+
+            $scope.$watch('todos', updateDays);
+
+            function updateDays() {
+                $scope.days = todosByDay($scope.todos);
+            }
 
             $scope.markAllDone = function (done) {
                 $.each($scope.todos, function (i, todo) {
@@ -131,33 +145,31 @@ var fakeDays = [{
 
             $scope.reset = function (todo) {
                 console.log('Resetting...');
+
                 $scope.todos = angular.copy($scope.originalTodos);
                 delete todo.editing;
             }
 
             $scope.update = function (todo) {
-                console.log('todo to update:', todo);
+                todo.due = new Date(todo.due).getTime();
 
                 todo.$update(function () {
-                    console.log(arguments);
                     delete todo.editing;
+                    updateDays();
                 });
             }
         }
     ]);
 
-    function dayTimePairings(due) {
-        var days = 4;
+    function upcomingTimes(startAt, days) {
+        var days = +days || 4;
 
         var pairings = [];
 
-        var date = new Date(due).setMinutes(0, 0);
-        for (var i = 0; i < days * 24; i++) {
+        var date = new Date(startAt).setMinutes(0, 0);
+        for (var i = 0; i < (days * 24); i++) {
 
-            pairings.push({
-                value: date,
-                display: moment(date).format('MM/DD hh:mm')
-            });
+            pairings.push((new Date(date)).toISOString());
 
             date = new Date(new Date(date).getTime() + 60 * 60 * 1000)
         }
@@ -186,13 +198,14 @@ var fakeDays = [{
         return days;
     }
 
+    // Filter functions
     function simpleDay(date) {
         date = new Date(date);
         if (!date || date === 'NaN') return date;
         return moment(date).format('ddd MMM D');
     }
 
-    function schduledTime(date) {
+    function scheduledTime(date) {
         date = new Date(date);
         if (!date || date === 'NaN') return date;
         var m = moment(date);
@@ -210,5 +223,10 @@ var fakeDays = [{
         date = new Date(date);
         if (!date || date === 'NaN') return date;
         return moment(date).isBefore();
+    }
+
+    function selectDay(date) {
+        date = new Date(date).setMinutes(0, 0);
+        return moment(date).format('MM/DD HH:mm');
     }
 })(angular);

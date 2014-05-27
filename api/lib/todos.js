@@ -162,7 +162,7 @@ Todos.prototype.update = function (id, values, next) {
     var fields = {};
     if (values.title) fields.title = values.title.toString();
     if (values.body) fields.body = values.body.toString();
-    if (values.due && Date.parse(values.due) !== 'NaN') fields.due = Date.parse(values.due);
+    if (values.due && new Date(values.due) !== 'NaN') fields.due = new Date(values.due);
     if ('done' in values)
         fields.done = (typeof values.done === 'string') ? values.done.toLowerCase() === 'true' : !!values.done;
 

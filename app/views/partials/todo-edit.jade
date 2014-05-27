@@ -1,7 +1,7 @@
 form.todo-edit(role="form")
     .form-group.due-picker
         label= 'Change date & hour:'
-        select.form-control(ng-options="pair.value as pair.display for pair in dayTimePairings(todo.due)" ng-model="todo.due")
+        select.form-control(ng-options="day | selectDay for day in upcomingTimes(todo.due)" ng-model="todo.due")
 
     .form-group
         input.form-control(type="text" ng-model="todo.title" placeholder="Title")
