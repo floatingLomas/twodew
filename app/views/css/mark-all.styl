@@ -1,43 +1,39 @@
-/**
- *  'Mark All' button
- */
 .btn-mark-all
-    width 258px
-    height 61px
+    width mark-all-btn-width
+    height mark-all-btn-height
 
     background linear-gradient(top, #cfd5dc, #b0b9c5)
     border-color #9facb7
 
-    font-size 22px
+    font-size menu-font-size
     color white !important
     text-shadow #9facb7 1px 1px
-    letter-spacing 1px
 
 .btn-group.open .btn-mark-all
     background linear-gradient(top, #afb9c4, #cfd5db)
     // border-color #9facb7
 
 .dropdown-menu.mark-menu
-    font-size 24px
+    font-size menu-font-size
 
     border 0
-    box-shadow 0 0 36px rgba(0, 0, 0, .3)
+    box-shadow 0 0 (1.25 * menu-font-size) rgba(0, 0, 0, .3)
 
-    margin-top 29px
-    padding-top 12px
-    padding-bottom 18px
-    padding-left 11px
-    padding-right 44px
+    margin-top (1.25 * menu-font-size)
+    padding-top (1/2 * menu-font-size)
+    padding-bottom (3/4 * menu-font-size)
+    padding-left (1/2 * menu-font-size)
+    padding-right (2 * menu-font-size)
 
     li
-        padding 5px
+        padding (1/4 * menu-font-size)
 
     ::before
-        triangle-size = 10px
+        triangle-size = (1/2 * menu-font-size)
 
         position absolute
         top -(triangle-size)
-        right 40px
+        right (5/3 * menu-font-size)
         display inline-block
         border-right triangle-size solid transparent
         border-bottom triangle-size solid white
@@ -45,27 +41,27 @@
         content ''
 
 .dropdown-menu.edit-menu
-    font-size 24px
+    font-size menu-font-size
 
     border 0
-    box-shadow 0 0 36px rgba(0, 0, 0, .3)
+    box-shadow 0 0 (1.25 * menu-font-size) rgba(0, 0, 0, .3)
 
-    margin-top 29px
+    margin-top (1.25 * menu-font-size)
 
-    padding-top 12px
-    padding-bottom 18px
-    padding-left 30px
-    padding-right 44px
+    padding-top (1/2 * menu-font-size)
+    padding-bottom (3/4 * menu-font-size)
+    padding-left (1/2 * menu-font-size)
+    padding-right (2 * menu-font-size)
 
     li
-        padding 5px
+        padding (1/4 * menu-font-size)
 
     ::before
-        triangle-size = 10px
+        triangle-size = (1/2 * menu-font-size)
 
         position absolute
         top -(triangle-size)
-        right 5px
+        right (5/3 * menu-font-size)
         display inline-block
         border-right triangle-size solid transparent
         border-bottom triangle-size solid white

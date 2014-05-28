@@ -3,29 +3,29 @@
     width 100%
 
     .search-container
-        padding-top 38px
-        margin-left 26px
-        width calc(100% \- 26px)
+        padding-top (1.5 * menu-font-size - 2px)
+        margin-left menu-font-size
+        width "calc(100% - %s)" % menu-font-size
 
         span.icon-search
-            color #3f4e5a
-            font-size 38px
+            color search-icon-color
+            font-size (1.75 * menu-font-size)
             float left
 
 input.search-box
-    padding-top 7px
-    padding-left 20px
+    padding-top (3/8 * menu-font-size)
+    padding-left (3/4 * menu-font-size)
 
-    search-box-width = (26px + 38px + 20px + 20px)
+    seaerch-box-margin = (5 * menu-font-size)
 
-    width "-webkit-calc(100% - %s)" % (search-box-width)
-    width "-moz-calc(100% - %s)" % (search-box-width)
-    width "calc(100% - %s)" % (search-box-width)
+    width "-webkit-calc(100% - %s)" % (seaerch-box-margin)
+    width "-moz-calc(100% - %s)" % (seaerch-box-margin)
+    width "calc(100% - %s)" % (seaerch-box-margin)
 
     border none
 
-    font-size 22px
-    letter-spacing 1px
+    font-size menu-font-size
+    letter-spacing (menu-font-size / 24)
 
     color search-text-color
 

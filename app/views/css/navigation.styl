@@ -3,53 +3,53 @@
     height logo-height
 
 .menu-container
-    background linear-gradient(top, #192229, #161e24)
+    background linear-gradient(top, menu-top-color, menu-bottom-color)
 
     width nav-width
 
     height inherit
     overflow hidden
-    padding-bottom 5000px
-    margin-bottom -5000px
+    padding-bottom overflow-blowout-depth
+    margin-bottom -overflow-blowout-depth
 
 ul.unstyled.nav-menu
-    padding-top 40px
+    padding-top (1.75 * menu-font-size)
 
     height inherit
 
     list-style none
 
     li.separator
-        background #2c3947
+        background menu-separator-color
         height 1px
         width 100%
 
-        margin-top 18px
-        margin-bottom 18px
+        margin-top (3/4 * menu-font-size)
+        margin-bottom (3/4 * menu-font-size)
 
     li.menu-item
         color white
-        font-size 24px
+        font-size menu-font-size
 
         display inline-block
 
-        padding-left 24px
-        padding-right 24px
+        padding-left menu-font-size
+        padding-right menu-font-size
 
-        padding-top 28px
-        padding-bottom 30px
+        padding-top (1.25 * menu-font-size)
+        padding-bottom (1.25 * menu-font-size)
 
         &:first-child
-            padding-bottom 40px
+            padding-bottom (1.5 * menu-font-size)
 
         &.active
             color todo-blue-color
 
         span[class^='icon-']
             color todo-blue-color
-            font-size 34px
+            font-size (1.5 * menu-font-size)
 
-            padding-right 14px
+            padding-right (menu-font-size / 2 + 2px)
 
         span.icon-plus-circled
             color todo-add-color

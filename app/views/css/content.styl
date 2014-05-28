@@ -1,5 +1,5 @@
 .transition // gradient line between search and the main content
-    height 6px
+    height (1/4 * menu-font-size)
     width 100%
     background linear-gradient(top, #d2d5d6, container-color)
 
@@ -8,28 +8,22 @@
     background-color container-color
     height inherit
     overflow hidden
-    padding-bottom 500px
-    margin-bottom -500px
+    padding-bottom (overflow-blowout-depth / 10)
+    margin-bottom -(overflow-blowout-depth / 10)
 
 .list
     width 100%
-    padding-top 44px
-    padding-left 44px
-    padding-right 48px
+    padding-top (2 * menu-font-size)
+    padding-left (2 * menu-font-size)
+    padding-right (2 * menu-font-size)
 
 .day-header
     width 100%
 
-    padding-top 24px
-    padding-bottom 48px
+    padding-top menu-font-size
+    padding-bottom (2 * menu-font-size)
 
-    font-size 26px
-
-icon-space-width = 168px
-icon-circle-diameter = 112px
-icon-connector-line-width = 10px
-
-circl-offset-from-top = 69px
+    font-size menu-font-size
 
 .todo-col-fixed, .todo-row-fixed
     float left
@@ -44,18 +38,18 @@ circl-offset-from-top = 69px
 
 .popover
     min-width 960px !important
-    padding 12px
+    padding (1/2 * menu-font-size)
 
     border none
     border-radius 2px
-    box-shadow 0 0 24px rgba(0, 0, 0, .3)
+    box-shadow 0 0 menu-font-size rgba(0, 0, 0, .3)
 
 .popover.right
-    margin-top -27px
-    margin-left 98px !important
+    margin-top -menu-font-size
+    margin-left (4 * menu-font-size) !important
 
 .popover.right > .arrow
-    top 50px
+    top (2 * menu-font-size)
     left -11px
     margin-top -11px
     border-right-color #999
@@ -88,7 +82,7 @@ ul.todos
     position relative
 
     padding-top circl-offset-from-top
-    padding-left 4px
+    padding-left (1/6 * menu-font-size)
     height 100%
 
 .todo-icon-circle
@@ -109,78 +103,74 @@ ul.todos
 
     span
         color white
-        font-size 48px
+        font-size (2 * menu-font-size)
 
 .todo-content
     width "calc(100% - %s)" % (icon-space-width)
 
-    margin-bottom 36px
+    margin-bottom (1.5 * menu-font-size)
 
-    padding-top 34px
-    padding-right 28px
-    padding-bottom 48px
-    padding-left 28px
+    padding-top (1.5 * menu-font-size)
+    padding-right menu-font-size
+    padding-bottom (2 * menu-font-size)
+    padding-left menu-font-size
 
     background-color white
     box-shadow 0 1px 2px rgba(0, 0, 0, .125)
 
-    font-size 24px
-    letter-spacing 1px
+    font-size menu-font-size
 
 .todo-meta
     color todo-meta-color
-    letter-spacing .85px
 
 .todo-title
     color todo-title-color
-    font-size 39px
-    letter-spacing .4px
+    font-size (1.5 * menu-font-size)
 
-    padding-top 28px
-    padding-bottom 20px
+    padding-top (7/6 * menu-font-size)
+    padding-bottom (5/6 * menu-font-size)
 
 .todo-body
-    font-size 24px
+    font-size menu-font-size
     color todo-body-color
-    letter-spacing .9px
     line-height 1.65em
 
 .todo-edit
-    font-size 22px
+    font-size menu-font-size
 
     .form-group
-        margin-bottom 18px
+        margin-bottom (3/4 * menu-font-size)
 
     .form-group.due-picker
-        margin-bottom 4px
+        margin-bottom (1/6 * menu-font-size)
 
     .form-control
-        font-size 22px
+        font-size menu-font-size
 
-        padding 18px
+        padding (3/4 * menu-font-size)
 
     input.form-control
-        height 60px
+        height (2.5 * menu-font-size)
 
     button
-        font-size 28px
-        width 218px
-        height 60px
+        font-size menu-font-size
+        width (7/8 * mark-all-btn-width)
+        height mark-all-btn-height
 
-        margin-left 18px
+        margin-left (3/4 * menu-font-size)
 
         border-radius 2px
 
     label
-        width 260px
-        height 43px
+        width mark-all-btn-width
+        height (2 * menu-font-size)
 
         display inline-block
         clear none
 
     select.form-control
-        width 194px
-        height 43px
+        width (3/4 * mark-all-btn-width)
+        height (2 * menu-font-size)
 
         display inline-block
         clear none
