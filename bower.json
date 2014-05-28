@@ -21,6 +21,8 @@
     "moment": "~2.6.0",
     "angular-resource": "~1.2.16",
     "polycalc": "*",
-    "jscssp": "~0.1.1"
+    "jscssp": "~0.1.1",
+    "angular-strap": "~2.0.2",
+    "angular-ui-router": "~0.2.10"
   }
 }

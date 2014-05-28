@@ -1,6 +1,6 @@
 form.todo-edit(role="form")
     .form-group.due-picker
-        label= 'Change date & hour:'
+        label= '{{dateLabel}}'
         select.form-control(ng-options="day | selectDay for day in upcomingTimes(todo.due)" ng-model="todo.due")
 
     .form-group
@@ -10,6 +10,10 @@ form.todo-edit(role="form")
         textarea.form-control(rows="4" ng-model="todo.body" placeholder="Title")
 
     .form-group
-        .pull-right
-            button.btn.btn-edit-inline.btn-default(ng-click="reset(todo)")= 'Discard'
-            button.btn.btn-edit-inline.btn-primary(ng-click="update(todo)")= 'Save'
+        .pull-right(ng-hide="isModal")
+            button.btn.btn-edit-inline.btn-default(ng-click="reset(todo)")= 'DISCARD'
+            button.btn.btn-edit-inline.btn-primary(ng-click="update(todo)")= 'SAVE'
+
+        .pull-right(ng-show="isModal")
+            button.btn.btn-edit-inline.btn-default(ng-click="reset(todo);$hide()")= 'DISCARD'
+            button.btn.btn-edit-inline.btn-primary(ng-click="update(todo);$hide()")= 'SAVE'

@@ -1,19 +1,22 @@
-ul.unstyled.nav-menu
-    li.menu-item.active
+ul.unstyled.nav-menu(ng-controller='NavigationController')
+    li.menu-item(ng-class="{'active': (activeMenu('today'))}")
         span.icon-calendar
         span= 'Today'
-    li.menu-item
+    li.menu-item(ng-class="{'active': (activeMenu('week'))}")
         span.icon-calendar
         span= 'Week'
-    li.menu-item
+    li.menu-item(ng-class="{'active': (activeMenu('all'))}")
         span.icon-inbox
         span= 'All time'
-    li.menu-item
+    li.menu-item(ng-class="{'active': (activeMenu('settings'))}")
         span.icon-cog
         span= 'Settings'
 
     li.separator
 
     li.menu-item
-        span.icon-plus-circled
-        span= 'Add new'
+        span(bs-popover data-placement="right" data-template="partials/todo-new" data-container="#new-todo-container")
+            span.icon-plus-circled
+            span= 'Add new'
+
+    #new-todo-container

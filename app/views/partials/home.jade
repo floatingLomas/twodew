@@ -2,48 +2,48 @@
 extends ../layout
 
 block content
-    .container(ng-controller='WeeklyTodosController')
+    .container
         .top-container.clearfix
             .nav-col-fixed.logo-container
 
             .nav-row-fixed
                 .search
-                    .search-container
+                    .search-container(ng-controller="SearchController")
                         span.icon-search
 
-                        input.search-box(placeholder='Search for particular task')
+                        input.search-box(placeholder='Search for particular task' ng-model='search')
         .bottom-container
             .nav-col-fixed.menu-container
                 include ./navigation
 
             .nav-row-fixed
-                    .transition
+                .transition
 
-                    .main
-                        .list
-                            .btn-group.pull-right
-                                button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
-                                    span= 'Mark everything '
-                                    span.icon-down-dir
+                .main(ng-controller='TodosController')
+                    .list
+                        .btn-group.pull-right
+                            button.btn.btn-mark-all.dropdown-toggle(type="button" data-toggle="dropdown")
+                                span= 'Mark everything '
+                                span.icon-down-dir
 
-                                ul.dropdown-menu.mark-menu(role='menu')
-                                    li: a(ng-click="markAllDone(true)")= 'Done'
-                                    li: a(ng-click="markAllDone(false)")= 'Incomplete'
+                            ul.dropdown-menu.mark-menu(role='menu')
+                                li: a(ng-click="markAllDone(true)")= 'Done'
+                                li: a(ng-click="markAllDone(false)")= 'Incomplete'
 
 
-                            // For day in days
-                            .day(ng-repeat='day in days')
-                                .day-header
-                                    | {{ day.date | relativeDay }}
-                                    span.light-text= ' ' + '{{ day.date | simpleDay }}'
+                        // For day in days
+                        .day(ng-repeat='day in days | filteredBySearch:search')
+                            .day-header
+                                | {{ day.date | relativeDay }}
+                                span.light-text= ' ' + '{{ day.date | simpleDay }}'
 
-                                ul.unstyled.todos
-                                    li(ng-repeat='todo in day.todos')
-                                        .todo.clearfix
-                                            .todo-status.todo-col-fixed.last
-                                                .todo-icon-space
-                                                    .todo-icon-circle(ng-class='{ complete: (todo.done), overdue: (!todo.done && inThePast(todo.due)) }')
-                                                        span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && inThePast(todo.due))}")
+                            ul.unstyled.todos
+                                li(ng-repeat='todo in day.todos')
+                                    .todo.clearfix
+                                        .todo-status.todo-col-fixed.last
+                                            .todo-icon-space
+                                                .todo-icon-circle(ng-class='{ complete: (todo.done), overdue: (!todo.done && todo.due | inThePast) }')
+                                                    span(ng-class="{ 'icon-check': (todo.done), 'icon-attention':  (!todo.done && todo.due | inThePast)}")
 
-                                            .todo-content.todo-row-fixed
-                                                span(ng-include="todo.editing ? 'partials/todo-edit' : 'partials/todo'")
+                                        .todo-content.todo-row-fixed
+                                            span(ng-include="todo.editing ? 'partials/todo-edit' : 'partials/todo'")
