@@ -1,5 +1,7 @@
 (function (angular) {
-    angular.module('TD.services', ['ngResource']).factory('Todos', function ($resource) {
+    var services = angular.module('TD.services', ['ngResource']);
+
+    services.factory('Todos', function ($resource) {
         return $resource('/api/:action/:_id', {
             _id: '@_id'
         }, {
@@ -30,5 +32,39 @@
                 }
             }
         });
+    });
+
+    services.service('searchService', function ($rootScope) {
+        var searchService = {};
+
+        searchService.search = '';
+
+        searchService.setSearch = function (search) {
+            this.search = search;
+            this._broadcast();
+        };
+
+        searchService._broadcast = function () {
+            $rootScope.$broadcast('search');
+        };
+
+        return searchService;
+    });
+
+    services.service('simpleLocationService', function ($rootScope) {
+        var simpleLocationService = {};
+
+        simpleLocationService.location = '';
+
+        simpleLocationService.setLocation = function (location) {
+            this.location = location;
+            this._broadcast();
+        };
+
+        simpleLocationService._broadcast = function () {
+            $rootScope.$broadcast('simpleLocation');
+        };
+
+        return simpleLocationService;
     });
 })(angular);

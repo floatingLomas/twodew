@@ -1,14 +1,14 @@
 ul.unstyled.nav-menu(ng-controller='NavigationController')
-    li.menu-item(ng-class="{'active': (activeMenu('today'))}")
+    li.menu-item(ng-class="{'active': activeMenu('today')}"): a.undecorated(ng-click="setSimpleLocation('today')")
         span.icon-calendar
         span= 'Today'
-    li.menu-item(ng-class="{'active': (activeMenu('week'))}")
+    li.menu-item(ng-class="{'active': activeMenu('week')}"): a.undecorated(ng-click="setSimpleLocation('week')")
         span.icon-calendar
         span= 'Week'
-    li.menu-item(ng-class="{'active': (activeMenu('all'))}")
+    li.menu-item( ng-class="{'active': activeMenu('all')}"): a.undecorated(ng-click="setSimpleLocation('all')")
         span.icon-inbox
         span= 'All time'
-    li.menu-item(ng-class="{'active': (activeMenu('settings'))}")
+    li.menu-item(ng-class="{'active': activeMenu('settings')}"): a.undecorated(data-container="body" data-toggle="popover" data-placement="right" data-content="Didn't quite get to settings, unfortunately!")
         span.icon-cog
         span= 'Settings'
 
