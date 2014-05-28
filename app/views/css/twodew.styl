@@ -5,7 +5,7 @@
 
 global-reset()
 
-// Variable definitions
+// Colors
 todo-blue-color = #09bdef
 todo-add-color = #47ec6e
 container-color = #f0f3f5
@@ -23,40 +23,54 @@ menu-separator-color = #2c3947
 search-text-color = #b4bec8
 
 todo-meta-color = #bfc7d0
-todo-title-color = black
+todo-title-color = #000000
 todo-body-color = #636669
 
-nav-width = 250px
-logo-height = 110px
+// nav-width = 250px
+// logo-height = 110px
+nav-width = 125px
+logo-height = 55px
 
 overflow-blowout-depth = 5000px
 
-menu-font-size = 24px
+// menu-font-size = 24px
+menu-font-size = 12px
 
-mark-all-btn-width = 260px
-mark-all-btn-height = 60px
+// mark-all-btn-width = 260px
+// mark-all-btn-height = 60px
+mark-all-btn-width = 130px
+mark-all-btn-height = 30px
 
-icon-space-width = 168px
-icon-circle-diameter = 112px
-icon-connector-line-width = 10px
+// icon-space-width = 168px
+// icon-circle-diameter = 112px
+// icon-connector-line-width = 10px
+icon-space-width = 84px
+icon-circle-diameter = 56px
+icon-connector-line-width = 5px
 
-circl-offset-from-top = 69px
+// circl-offset-from-top = 69px
+circl-offset-from-top = 35px
 
 html
-    overflow-y scroll
+    position absolute
+    height 100%
+    width 100%
+
+    top 0
+    bottom 0
+
     margin 0
     padding 0
 
-html, body
+body
+    position absolute
+    height 100%
+    width 100%
+
     margin 0
     padding 0
 
     font-family 'Montserrat', sans-serif
-
-    height 100%
-    width 100%
-
-    position absolute
 
 box-shadow()
     -webkit-box-shadow arguments
@@ -81,9 +95,12 @@ a.undecorated
     color search-text-color
 
 .container
+    position absolute
+    height 100%
+    width 100%
+
     margin 0
     padding 0
-    width 100%
 
 .nav-col-fixed, .nav-row-fixed
     float left
